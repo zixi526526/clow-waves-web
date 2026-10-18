@@ -1,8 +1,16 @@
 # Clow Waves Web · 可嵌入网页的数字波纹
 
-> **[在线演示：https://clow-waves-web.pages.dev/?lang=zh](https://clow-waves-web.pages.dev/?lang=zh)**
+<p align="center">
+  <a href="./README.md">English</a> | <a href="./README.zh-CN.md">简体中文</a>
+</p>
 
-> **Demo 界面支持英语和中文切换，默认英语。** 右上角点击「中文 / EN」，可通过 `?lang=zh` 分享中文界面。切换语言不会中断波纹动画。
+交互式 ASCII 字符流与数字涟漪，可独立运行，也可以嵌入个人网站。
+
+[![Clow Waves Web 实际渲染的动态预览](preview/demo.gif)](https://clow-waves-web.pages.dev/?lang=zh)
+
+**[▶ 在线体验](https://clow-waves-web.pages.dev/?lang=zh)** · [English demo](https://clow-waves-web.pages.dev/?lang=en)
+
+> **语言说明：** 网页演示默认英语，右上角可切换「中文 / EN」，也可以通过 `?lang=zh` 直接打开中文界面；切换不会重启波纹动画。本页面顶部的 English / 简体中文则用于切换两份完整的 GitHub README 文档。
 
 根据两段 Claude Desktop 参考视频重建的流动字符背景与点击特效。提供浏览器可直接运行的成品、可独立接入的组件、源码和 React 示例。
 
@@ -196,3 +204,9 @@ npm run check
 | `VALIDATION.md` | 本次实际检查结果及验证范围 |
 
 保留许可证即可按 MIT 条款使用和修改。文件包不包含参考录屏或任何账户信息。
+
+## 来源、版权与许可
+
+核心特效主要改编自 **[Maurdekye/orgtree](https://github.com/Maurdekye/orgtree)**。Copyright (c) 2026 Maurdekye，采用 **MIT License**；再次分发相关代码时必须保留原作者的版权和许可声明。完整来源、许可及移植说明参见 [LICENSE](LICENSE)、[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) 和 [PROVENANCE.md](PROVENANCE.md)。
+
+**本项目为非官方社区作品，与 Anthropic 不存在隶属、赞助或认可关系。** Claude、Anthropic 为其权利人所有的商标。本仓库不分发 Anthropic 的专有应用文件或官方录屏；视觉相似不代表获得 Anthropic 授权。
