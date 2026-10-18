@@ -157,11 +157,11 @@ effect.resume();
 
 `renderAt()` renders an explicit frozen comparison frame; it does not start playback. `dist/index.html?qa=1` exposes isolated static, circle, and heart test buttons; these controls are hidden from the regular demo.
 
-## Reconstruction approach and limitations
+## Implementation and upstream references
 
 The implementation uses a fixed glyph grid, multiscale moving wind field, glyph-specific transformation rates, direction-dependent stroke illumination, click-driven field displacement, an outer wavefront, inner repeating bands, and fading blue trails. The U-shaped curves visible inside waves result from the wave bands interacting with the wind field: no separate eyes or mouth icons are added.
 
-**Major upstream contribution:** The foundational mathematics comes from the MIT-licensed [Orgtree Claude Waves](https://github.com/Maurdekye/orgtree/blob/main/docs/rust-engine/canvas-background-themes.md), with precise source attribution in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) and [PROVENANCE.md](PROVENANCE.md). The upstream project describes its own reconstruction process. This repository did not obtain Anthropic's proprietary source or the recording session's random seed, exact glyph rasterization, or full render settings, so it makes no pixel-perfect or “100% official implementation” claim.
+This project adapts the MIT-licensed [Maurdekye/orgtree](https://github.com/Maurdekye/orgtree) implementation. The upstream project was created with reference to Claude Desktop's **Claude Waves** animated background. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) and [PROVENANCE.md](PROVENANCE.md) for attribution and licensing details.
 
 Selected propagation parameters:
 
