@@ -157,11 +157,11 @@ effect.resume();
 
 `renderAt()` 是明确的冻结/对照接口，不会继续自动播放。`dist/index.html?qa=1` 提供隔离的静态、圆形和心形按钮，普通页面不显示这些控件。
 
-## 还原依据与边界
+## 实现原理与上游来源
 
 实现采用固定字符格、带多个尺度的流动风场、不同字符自己的变换节奏、风向相关的字形笔画明暗、点击引起的场位移、外层波前、内层周期环带以及蓝色衰减尾迹。波纹中的 U 形轮廓来自内层波带与风场叠加，没有添加独立的眼睛或嘴巴图标。
 
-主要数学来自 MIT 项目 [Orgtree 的 Claude Waves](https://github.com/Maurdekye/orgtree/blob/main/docs/rust-engine/canvas-background-themes.md)，对应源码见 `THIRD_PARTY_NOTICES.md`。上游声明它依据 Claude Desktop 的背景算法进行独立重建。本交付没有取得 Anthropic 官方源码，也无法从录屏恢复原来那次会话的随机种子、精确字体栅格化和完整录制参数，因此不声称逐像素相同或“100%官方实现”。
+本项目基于 [Maurdekye/orgtree](https://github.com/Maurdekye/orgtree) 的开源实现进行改编。上游项目参考 Claude Desktop 的 **Claude Waves** 动态背景制作，采用 MIT License。详细来源与许可信息见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) 和 [PROVENANCE.md](PROVENANCE.md)。
 
 保留的关键传播参数：
 
