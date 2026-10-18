@@ -19,7 +19,11 @@ A standalone, interactive **WebGL2 ASCII wave / digital ripple background** for 
 
 ## Try the demo
 
+🌐 **Language:** The live demo is **English-first**. Click **中文** in the top-right corner to switch the entire UI to Chinese, and **EN** to switch back. The choice is saved locally; use `?lang=en` or `?lang=zh` to link to a specific locale. Language switching does not restart the ripple field.
+
 **Offline, no installation:** Download and open [`digital-ripples-standalone.html`](digital-ripples-standalone.html). Click the empty background to generate ripples; press **H** to toggle the interface, and use the controls to change the preset and shape.
+
+For deployment, publish the contents of `dist/` to **Cloudflare Pages** (project build output: `dist`, no build command required because distribution files are checked in). Git integration can redeploy automatically on push when authorized. See [DEPLOYMENT.md](DEPLOYMENT.md).
 
 Alternatively open [`dist/index.html`](dist/index.html) while keeping its JS/CSS files together. Serving `dist/` over HTTP also works. No server-side functionality is required.
 
@@ -66,7 +70,7 @@ waves.getStats();
 waves.destroy();
 ```
 
-Options include `preset`, `shape`, `glyphPool`, `scale`, `speed`, `ambientOpacity`, `rippleOpacity`, `seed`, `backgroundColor`, `inkColor`, `rippleColor`, `fps`, `idleFps`, `idleAfter`, `interactive`, `pointerWake`, `respectReducedMotion`, `renderer`, and `fontFamily`. See [Chinese documentation](README.zh-CN.md#参数) for the full table.
+Options include `preset`, `shape`, `glyphPool`, `scale`, `speed`, `ambientOpacity`, `rippleOpacity`, `seed`, `backgroundColor`, `inkColor`, `rippleColor`, `fps`, `idleFps`, `idleAfter`, `interactive`, `pointerWake`, `respectReducedMotion`, `renderer`, and `fontFamily`. See the [complete API reference and options table](README.zh-CN.md#参数) (currently in Chinese).
 
 ## Build and test
 

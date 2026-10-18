@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "build": "node scripts/build.mjs",
-    "check": "node --check dist/digital-ripples.js && node --check dist/demo.js && node scripts/test-lifecycle.mjs"
+    "check": "node --check dist/digital-ripples.js && node --check dist/demo.js && node scripts/test-lifecycle.mjs && node --test scripts/test-i18n.mjs"
   },
   "engines": {
     "node": ">=22.18"

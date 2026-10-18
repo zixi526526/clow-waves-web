@@ -1,12 +1,13 @@
-<!doctype html>
-<html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="color-scheme" content="light dark" />
-    <meta name="description" content="以字符网格重现静谧的动态背景与点击数字波纹。可直接嵌入个人网页的 Clow Waves Web 演示。" />
-    <title>Clow Waves Web · 交互背景</title>
-    <style>:root {
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<meta content="light dark" name="color-scheme"/>
+<meta content="Explore flowing ASCII waves and interactive digital ripples, built with WebGL2. An unofficial web adaptation of Orgtree." data-i18n-content="pageDescription" name="description"/>
+<title data-i18n="pageTitle">Clow Waves Web · Interactive ASCII Background</title>
+<style>:root {
   color-scheme: light;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
   --page-bg: #fafafa;
@@ -114,60 +115,64 @@ body.interface-hidden .status-toast { bottom: 30px; }
   *, *::before, *::after { scroll-behavior: auto !important; }
   .demo-interface, .first-click-hint, .restore-interface, .status-toast { transition: none; }
 }
+/* English-first / Chinese toggle and unobtrusive source credit. */
+.language-toggle { font-weight: 600; letter-spacing: .03em; min-width: 37px; }
+.demo-credits { position: fixed; z-index: 6; left: max(30px,env(safe-area-inset-left)); bottom: max(37px,env(safe-area-inset-bottom)); color: var(--muted); font-size: 9px; display: flex; align-items: center; gap: 12px; opacity: .70; pointer-events: auto; }
+.demo-credits a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.demo-credits a:hover { color: var(--ink); }
+@media (max-width: 880px) { .demo-credits { bottom: max(110px, calc(env(safe-area-inset-bottom) + 84px)); } }
+@media (max-width: 640px) { .toolbar .text-button { padding: 8px 7px; } .demo-credits { bottom: max(90px, calc(env(safe-area-inset-bottom) + 68px)); font-size: 8px; max-width: 85vw; } }
+@media (max-width: 340px) { .demo-credits span { display: none; } }
 </style>
-    
-    
-  </head>
-  <body data-preset="reference">
-    <div id="ripple-background" aria-hidden="true"></div>
 
-    <header class="topbar demo-interface" data-ripple-ignore>
-      <div class="brand" aria-label="Clow Waves Web 交互背景演示">Clow Waves Web<span class="brand-caption">交互背景</span></div>
-      <nav class="toolbar" aria-label="演示控制">
-        <div class="preset-wrap">
-          <button id="preset-toggle" class="text-button" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="preset-menu">预设<span class="chevron" aria-hidden="true"></span></button>
-          <div id="preset-menu" class="preset-menu" role="menu" aria-label="背景预设" hidden>
-            <button class="preset-item" type="button" role="menuitemradio" aria-checked="true" data-preset="reference"><span class="preset-swatch swatch-reference" aria-hidden="true"></span><span>视频二 · 纸白<span class="menu-description">中性灰字符，明亮背景</span></span><span class="preset-check" aria-hidden="true">✓</span></button>
-            <button class="preset-item" type="button" role="menuitemradio" aria-checked="false" data-preset="warm"><span class="preset-swatch swatch-warm" aria-hidden="true"></span><span>视频一 · 暖白<span class="menu-description">柔和的暖纸色调</span></span><span class="preset-check" aria-hidden="true">✓</span></button>
-            <button class="preset-item" type="button" role="menuitemradio" aria-checked="false" data-preset="dark"><span class="preset-swatch swatch-dark" aria-hidden="true"></span><span>深色 · 个人扩展<span class="menu-description">适合深色个人网页</span></span><span class="preset-check" aria-hidden="true">✓</span></button>
-          </div>
-        </div>
-        <button id="settings-toggle" class="text-button" type="button" aria-expanded="false" aria-controls="settings-panel">调节</button>
-        <button id="clean-toggle" class="text-button" type="button" title="隐藏控件（H）">纯背景</button>
-      </nav>
-    </header>
 
-    <main class="demo-interface">
-      <p id="first-click-hint" class="first-click-hint">点击空白处，看看波纹</p>
-      <form id="ripple-form" class="ripple-form" data-ripple-ignore autocomplete="off">
-        <label class="input-label" for="ripple-text">波纹演示</label>
-        <input id="ripple-text" name="ripple-text" type="text" maxlength="160" placeholder="输入文字，按 Enter 激起波纹" aria-describedby="input-explanation" spellcheck="false" />
-        <button id="text-ripple-button" class="submit-button" type="submit" aria-label="用输入的文字触发波纹" title="触发波纹（Enter）"><span aria-hidden="true">↵</span></button>
-        <span id="input-explanation" class="sr-only">这是本地特效演示，不是 AI 对话。文字只用于选择波纹形状，不会被发送。可输入“爱心”或“圆形”试试。</span>
-      </form>
-    </main>
-
-    <section id="settings-panel" class="settings-panel demo-interface" role="dialog" aria-modal="false" aria-labelledby="settings-title" data-ripple-ignore hidden>
-      <div class="panel-heading"><h1 id="settings-title">让波纹适合你的网页</h1><button id="settings-close" class="icon-button" type="button" aria-label="关闭调节面板">×</button></div>
-      <p class="panel-intro">调整会立即生效。点击背景仍可激起波纹。</p>
-      <div class="select-row"><label for="preset-select">背景预设</label><select id="preset-select"><option value="reference">视频二 · 纸白</option><option value="warm">视频一 · 暖白</option><option value="dark">深色 · 个人扩展</option></select></div>
-      <div class="select-row"><label for="shape-select">点击形状</label><select id="shape-select"><option value="auto">圆形、圆形、爱心</option><option value="ripple">圆形波纹</option><option value="heart">爱心</option></select></div>
-      <div class="select-row"><label for="glyph-select">字符组合</label><select id="glyph-select"><option value="mixed">混合字符</option><option value="lettered">字母较多</option><option value="figured">数字较多</option></select></div>
-      <div class="range-control"><div class="range-heading"><label for="scale-range">字符大小</label><output id="scale-output" for="scale-range">1.00×</output></div><input id="scale-range" type="range" min="0.65" max="1.75" step="0.05" value="1" data-option="scale" /></div>
-      <div class="range-control"><div class="range-heading"><label for="ambient-opacity-range">背景字符浓度</label><output id="ambient-opacity-output" for="ambient-opacity-range">0.075</output></div><input id="ambient-opacity-range" type="range" min="0.02" max="0.20" step="0.005" value="0.075" data-option="ambientOpacity" /></div>
-      <div class="range-control"><div class="range-heading"><label for="ripple-opacity-range">点击波纹浓度</label><output id="ripple-opacity-output" for="ripple-opacity-range">0.40</output></div><input id="ripple-opacity-range" type="range" min="0.10" max="0.80" step="0.01" value="0.40" data-option="rippleOpacity" /></div>
-      <div class="range-control"><div class="range-heading"><label for="speed-range">流动速度</label><output id="speed-output" for="speed-range">1.00×</output></div><input id="speed-range" type="range" min="0.40" max="1.60" step="0.05" value="1" data-option="speed" /></div>
-      <div class="panel-actions"><button id="pause-toggle" class="panel-button" type="button" aria-pressed="false">暂停动画</button><button id="reset-settings" class="panel-button" type="button">恢复预设</button></div>
-      <div class="panel-actions"><button id="replay-demo" class="panel-button" type="button">播放点击示范</button><button id="copy-embed" class="panel-button" type="button">复制嵌入代码</button></div>
-      <p class="panel-footnote">按 H 隐藏控件，Esc 关闭面板。文字输入框仅用于演示波纹。</p>
-      <div id="copy-fallback" class="copy-fallback" hidden><label for="embed-code">请选中并复制以下代码</label><textarea id="embed-code" rows="6" readonly spellcheck="false"></textarea></div>
-    </section>
-
-    <button id="restore-interface" class="restore-interface" type="button" data-ripple-ignore hidden aria-label="显示演示控件（H）" title="显示控件（H）"><span aria-hidden="true">◌</span><span class="restore-label">显示控件</span></button>
-    <div id="demo-status" class="status-toast" role="status" aria-live="polite" aria-atomic="true" data-ripple-ignore></div>
-    <div id="load-error" class="load-error" role="alert" data-ripple-ignore hidden>背景加载失败。请确认 digital-ripples.js 与此页面位于同一目录。</div>
-    <noscript><p class="load-error">请启用 JavaScript 以查看动态字符背景。</p></noscript>
-  <script>/*! Digital Ripples 1.0.0 | Adapted from Orgtree (c) 2026 Maurdekye.
+</head>
+<body data-preset="reference">
+<div aria-hidden="true" id="ripple-background"></div>
+<header class="topbar demo-interface" data-ripple-ignore="">
+<div aria-label="Clow Waves Web interactive background demo" class="brand" data-i18n-aria="brandLabel">Clow Waves Web<span class="brand-caption" data-i18n="brandCaption">Interactive background</span></div>
+<nav aria-label="Demo controls" class="toolbar" data-i18n-aria="toolbarLabel">
+<div class="preset-wrap">
+<button aria-controls="preset-menu" aria-expanded="false" aria-haspopup="menu" class="text-button" id="preset-toggle" type="button"><span data-i18n="presetToggle">Presets</span><span aria-hidden="true" class="chevron"></span></button>
+<div aria-label="Appearance presets" class="preset-menu" data-i18n-aria="presetMenu" hidden="" id="preset-menu" role="menu">
+<button aria-checked="true" class="preset-item" data-preset="reference" role="menuitemradio" type="button"><span aria-hidden="true" class="preset-swatch swatch-reference"></span><span><span data-i18n="presetReference">Reference · Paper</span><span class="menu-description" data-i18n="presetReferenceDescription">Neutral ink, luminous backdrop</span></span><span aria-hidden="true" class="preset-check">✓</span></button>
+<button aria-checked="false" class="preset-item" data-preset="warm" role="menuitemradio" type="button"><span aria-hidden="true" class="preset-swatch swatch-warm"></span><span><span data-i18n="presetWarm">Warm · Ivory</span><span class="menu-description" data-i18n="presetWarmDescription">Soft, warm paper tones</span></span><span aria-hidden="true" class="preset-check">✓</span></button>
+<button aria-checked="false" class="preset-item" data-preset="dark" role="menuitemradio" type="button"><span aria-hidden="true" class="preset-swatch swatch-dark"></span><span><span data-i18n="presetDark">Dark · Midnight</span><span class="menu-description" data-i18n="presetDarkDescription">For dark-themed personal sites</span></span><span aria-hidden="true" class="preset-check">✓</span></button>
+</div>
+</div>
+<button aria-controls="settings-panel" aria-expanded="false" class="text-button" data-i18n="settingsToggle" id="settings-toggle" type="button">Customize</button>
+<button aria-label="Switch to Chinese" class="text-button language-toggle" data-ripple-ignore="" id="language-toggle" title="Switch to Chinese" type="button">中文</button><button class="text-button" data-i18n="cleanToggle" data-i18n-title="cleanTitle" id="clean-toggle" title="Hide controls (H)" type="button">Clean view</button>
+</nav>
+</header>
+<main class="demo-interface">
+<p class="first-click-hint" data-i18n="clickHint" id="first-click-hint">Click anywhere to make waves</p>
+<form autocomplete="off" class="ripple-form" data-ripple-ignore="" id="ripple-form">
+<label class="input-label" data-i18n="inputLabel" for="ripple-text">RIPPLE LAB</label>
+<input aria-describedby="input-explanation" data-i18n-placeholder="inputPlaceholder" id="ripple-text" maxlength="160" name="ripple-text" placeholder="Type heart or circle, then press Enter" spellcheck="false" type="text"/>
+<button aria-label="Trigger a ripple with the entered text" class="submit-button" data-i18n-aria="submitLabel" data-i18n-title="submitTitle" id="text-ripple-button" title="Trigger ripple (Enter)" type="submit"><span aria-hidden="true">↵</span></button>
+<span class="sr-only" data-i18n="inputExplanation" id="input-explanation">This is a local visual effect, not an AI chat. Your text is never sent. Try “heart” or “circle”.</span>
+</form>
+</main>
+<section aria-labelledby="settings-title" aria-modal="false" class="settings-panel demo-interface" data-ripple-ignore="" hidden="" id="settings-panel" role="dialog">
+<div class="panel-heading"><h1 data-i18n="settingsTitle" id="settings-title">Make the waves your own</h1><button aria-label="Close settings" class="icon-button" data-i18n-aria="closeSettings" id="settings-close" type="button">×</button></div>
+<p class="panel-intro" data-i18n="panelIntro">Changes take effect instantly. Click the empty background to interact.</p>
+<div class="select-row"><label data-i18n="presetLabel" for="preset-select">Background preset</label><select id="preset-select"><option data-i18n="presetReferenceOption" value="reference">Reference · Paper</option><option data-i18n="presetWarmOption" value="warm">Warm · Ivory</option><option data-i18n="presetDarkOption" value="dark">Dark · Midnight</option></select></div>
+<div class="select-row"><label data-i18n="shapeLabel" for="shape-select">Ripple shape</label><select id="shape-select"><option data-i18n="shapeAuto" value="auto">Circle · Circle · Heart</option><option data-i18n="shapeCircle" value="ripple">Circular ripple</option><option data-i18n="shapeHeart" value="heart">Heart ripple</option></select></div>
+<div class="select-row"><label data-i18n="glyphLabel" for="glyph-select">Character pool</label><select id="glyph-select"><option data-i18n="glyphMixed" value="mixed">Mixed characters</option><option data-i18n="glyphLetters" value="lettered">More letters</option><option data-i18n="glyphDigits" value="figured">More digits</option></select></div>
+<div class="range-control"><div class="range-heading"><label data-i18n="scaleLabel" for="scale-range">Glyph size</label><output for="scale-range" id="scale-output">1.00×</output></div><input data-option="scale" id="scale-range" max="1.75" min="0.65" step="0.05" type="range" value="1"/></div>
+<div class="range-control"><div class="range-heading"><label data-i18n="ambientLabel" for="ambient-opacity-range">Ambient density</label><output for="ambient-opacity-range" id="ambient-opacity-output">0.075</output></div><input data-option="ambientOpacity" id="ambient-opacity-range" max="0.20" min="0.02" step="0.005" type="range" value="0.075"/></div>
+<div class="range-control"><div class="range-heading"><label data-i18n="rippleLabel" for="ripple-opacity-range">Ripple intensity</label><output for="ripple-opacity-range" id="ripple-opacity-output">0.40</output></div><input data-option="rippleOpacity" id="ripple-opacity-range" max="0.80" min="0.10" step="0.01" type="range" value="0.40"/></div>
+<div class="range-control"><div class="range-heading"><label data-i18n="speedLabel" for="speed-range">Flow speed</label><output for="speed-range" id="speed-output">1.00×</output></div><input data-option="speed" id="speed-range" max="1.60" min="0.40" step="0.05" type="range" value="1"/></div>
+<div class="panel-actions"><button aria-pressed="false" class="panel-button" data-i18n="pause" id="pause-toggle" type="button">Pause animation</button><button class="panel-button" data-i18n="reset" id="reset-settings" type="button">Reset preset</button></div>
+<div class="panel-actions"><button class="panel-button" data-i18n="play" id="replay-demo" type="button">Play click sequence</button><button class="panel-button" data-i18n="copy" id="copy-embed" type="button">Copy embed code</button></div>
+<p class="panel-footnote" data-i18n="panelFootnote">Press H for clean view, Esc to close. The input only triggers visual effects.</p>
+<div class="copy-fallback" hidden="" id="copy-fallback"><label data-i18n="copyFallback" for="embed-code">Select and copy the code below</label><textarea id="embed-code" readonly="" rows="6" spellcheck="false"></textarea></div>
+</section>
+<button aria-label="Show demo controls (H)" class="restore-interface" data-i18n-aria="restoreAria" data-i18n-title="restoreTitle" data-ripple-ignore="" hidden="" id="restore-interface" title="Show controls (H)" type="button"><span aria-hidden="true">◌</span><span class="restore-label" data-i18n="restoreLabel">Show controls</span></button>
+<div aria-atomic="true" aria-live="polite" class="status-toast" data-ripple-ignore="" id="demo-status" role="status"></div>
+<div class="load-error" data-i18n="errorLoad" data-ripple-ignore="" hidden="" id="load-error" role="alert">Failed to load the effect. Keep digital-ripples.js next to this page.</div>
+<noscript><p class="load-error" data-i18n="errorJS">Enable JavaScript to view the animated ASCII background.</p></noscript>
+<div class="demo-credits demo-interface" data-ripple-ignore=""><span data-i18n="credits">Based on Orgtree · Independent unofficial demo</span><a data-i18n="sourceLink" href="https://github.com/zixi526526/clow-waves-web" rel="noopener noreferrer" target="_blank">Source ↗</a></div><script>/*! Digital Ripples 1.0.0 | Adapted from Orgtree (c) 2026 Maurdekye.
  * MIT License
  * 
  * Copyright (c) 2026 Maurdekye
@@ -2235,8 +2240,188 @@ if (typeof window !== 'undefined') window.DigitalRipples = DigitalRipples;
   'use strict';
 
   const $ = (id) => document.getElementById(id);
-  const host = $('ripple-background');
   const params = new URLSearchParams(window.location.search);
+  const LANGUAGE_KEY = 'clow-waves-web.demo.language';
+  function preferredLanguage() {
+    const query = params.get('lang');
+    if (query === 'en' || query === 'zh') return query;
+    try { return localStorage.getItem(LANGUAGE_KEY) === 'zh' ? 'zh' : 'en'; }
+    catch (_) { return 'en'; }
+  }
+  let language = preferredLanguage();
+  const translations = {
+  "en": {
+    "pageTitle": "Clow Waves Web · Interactive ASCII Background",
+    "pageDescription": "Explore flowing ASCII waves and interactive digital ripples, built with WebGL2. An unofficial web adaptation of Orgtree.",
+    "brandLabel": "Clow Waves Web interactive background demo",
+    "brandCaption": "Interactive background",
+    "toolbarLabel": "Demo controls",
+    "presetToggle": "Presets",
+    "presetMenu": "Appearance presets",
+    "presetReference": "Reference · Paper",
+    "presetWarm": "Warm · Ivory",
+    "presetDark": "Dark · Midnight",
+    "presetReferenceDescription": "Neutral ink, luminous backdrop",
+    "presetWarmDescription": "Soft, warm paper tones",
+    "presetDarkDescription": "For dark-themed personal sites",
+    "settingsToggle": "Customize",
+    "cleanToggle": "Clean view",
+    "cleanTitle": "Hide controls (H)",
+    "clickHint": "Click anywhere to make waves",
+    "inputLabel": "RIPPLE LAB",
+    "inputPlaceholder": "Type heart or circle, then press Enter",
+    "submitLabel": "Trigger a ripple with the entered text",
+    "submitTitle": "Trigger ripple (Enter)",
+    "inputExplanation": "This is a local visual effect, not an AI chat. Your text is never sent. Try “heart” or “circle”.",
+    "settingsTitle": "Make the waves your own",
+    "closeSettings": "Close settings",
+    "panelIntro": "Changes take effect instantly. Click the empty background to interact.",
+    "presetLabel": "Background preset",
+    "shapeLabel": "Ripple shape",
+    "glyphLabel": "Character pool",
+    "presetReferenceOption": "Reference · Paper",
+    "presetWarmOption": "Warm · Ivory",
+    "presetDarkOption": "Dark · Midnight",
+    "shapeAuto": "Circle · Circle · Heart",
+    "shapeCircle": "Circular ripple",
+    "shapeHeart": "Heart ripple",
+    "glyphMixed": "Mixed characters",
+    "glyphLetters": "More letters",
+    "glyphDigits": "More digits",
+    "scaleLabel": "Glyph size",
+    "ambientLabel": "Ambient density",
+    "rippleLabel": "Ripple intensity",
+    "speedLabel": "Flow speed",
+    "pause": "Pause animation",
+    "resume": "Resume animation",
+    "reset": "Reset preset",
+    "play": "Play click sequence",
+    "stop": "Stop sequence",
+    "copy": "Copy embed code",
+    "panelFootnote": "Press H for clean view, Esc to close. The input only triggers visual effects.",
+    "copyFallback": "Select and copy the code below",
+    "restoreLabel": "Show controls",
+    "restoreAria": "Show demo controls (H)",
+    "restoreTitle": "Show controls (H)",
+    "errorLoad": "Failed to load the effect. Keep digital-ripples.js next to this page.",
+    "errorJS": "Enable JavaScript to view the animated ASCII background.",
+    "credits": "Based on Orgtree · Independent unofficial demo",
+    "sourceLink": "Source ↗",
+    "switchLanguage": "Switch to Chinese",
+    "toastReset": "Current preset restored.",
+    "toastCopiedAsset": "Embed code copied. Also include digital-ripples.js in your site.",
+    "toastCopied": "Embed code copied.",
+    "toastManualCopy": "Code selected. Press Ctrl+C / ⌘C to copy.",
+    "errorInit": "Background initialization failed",
+    "errorReload": "Please reload the page.",
+    "errorDraw": "Failed to load background",
+    "errorUnavailable": "No supported graphics renderer is available in this browser."
+  },
+  "zh": {
+    "pageTitle": "Clow Waves Web · 交互式字符波纹背景",
+    "pageDescription": "探索 WebGL2 实现的流动 ASCII 字符背景与交互式数字波纹。基于 Orgtree 的非官方网页改编。",
+    "brandLabel": "Clow Waves Web 交互背景演示",
+    "brandCaption": "交互式背景",
+    "toolbarLabel": "演示控制",
+    "presetToggle": "预设",
+    "presetMenu": "外观预设",
+    "presetReference": "参考 · 纸白",
+    "presetWarm": "暖色 · 米白",
+    "presetDark": "深色 · 午夜",
+    "presetReferenceDescription": "中性字符，明亮背景",
+    "presetWarmDescription": "柔和的暖纸色调",
+    "presetDarkDescription": "适合深色个人网页",
+    "settingsToggle": "调节",
+    "cleanToggle": "纯背景",
+    "cleanTitle": "隐藏控件（H）",
+    "clickHint": "点击空白处，看看波纹",
+    "inputLabel": "波纹演示",
+    "inputPlaceholder": "输入“爱心”或“圆形”，按 Enter 触发波纹",
+    "submitLabel": "根据输入文字触发波纹",
+    "submitTitle": "触发波纹（Enter）",
+    "inputExplanation": "这里只是本地视觉特效，不是 AI 对话。文字不会被发送。可输入“爱心”或“圆形”。",
+    "settingsTitle": "让波纹适合你的网页",
+    "closeSettings": "关闭调节面板",
+    "panelIntro": "调整会立即生效。点击背景仍可激起波纹。",
+    "presetLabel": "背景预设",
+    "shapeLabel": "点击形状",
+    "glyphLabel": "字符组合",
+    "presetReferenceOption": "参考 · 纸白",
+    "presetWarmOption": "暖色 · 米白",
+    "presetDarkOption": "深色 · 午夜",
+    "shapeAuto": "圆形 · 圆形 · 爱心",
+    "shapeCircle": "圆形波纹",
+    "shapeHeart": "爱心波纹",
+    "glyphMixed": "混合字符",
+    "glyphLetters": "字母较多",
+    "glyphDigits": "数字较多",
+    "scaleLabel": "字符大小",
+    "ambientLabel": "背景字符浓度",
+    "rippleLabel": "点击波纹浓度",
+    "speedLabel": "流动速度",
+    "pause": "暂停动画",
+    "resume": "继续动画",
+    "reset": "恢复预设",
+    "play": "播放点击示范",
+    "stop": "停止点击示范",
+    "copy": "复制嵌入代码",
+    "panelFootnote": "按 H 隐藏控件，Esc 关闭面板。输入框只用来触发视觉特效。",
+    "copyFallback": "请选中并复制以下代码",
+    "restoreLabel": "显示控件",
+    "restoreAria": "显示演示控件（H）",
+    "restoreTitle": "显示控件（H）",
+    "errorLoad": "背景加载失败。请确认 digital-ripples.js 与此页面位于同一目录。",
+    "errorJS": "请启用 JavaScript 以查看动态字符背景。",
+    "credits": "基于 Orgtree · 非官方独立演示",
+    "sourceLink": "源代码 ↗",
+    "switchLanguage": "切换到英文",
+    "toastReset": "已恢复当前预设。",
+    "toastCopiedAsset": "嵌入代码已复制。请同时复制 digital-ripples.js 文件。",
+    "toastCopied": "嵌入代码已复制。",
+    "toastManualCopy": "代码已选中，请按 Ctrl+C / ⌘C 复制。",
+    "errorInit": "背景初始化失败",
+    "errorReload": "请重新加载页面。",
+    "errorDraw": "背景加载失败",
+    "errorUnavailable": "当前浏览器没有可用的绘图环境。"
+  }
+};
+  function t(key) { return translations[language][key] || translations.en[key] || key; }
+  function renderLanguage() {
+    document.documentElement.lang = language === 'zh' ? 'zh-CN' : 'en';
+    for (const element of document.querySelectorAll('[data-i18n]')) {
+      element.textContent = t(element.dataset.i18n);
+    }
+    for (const [attr, destination] of [
+      ['data-i18n-aria', 'aria-label'],
+      ['data-i18n-title', 'title'],
+      ['data-i18n-placeholder', 'placeholder'],
+      ['data-i18n-content', 'content'],
+    ]) {
+      for (const element of document.querySelectorAll('[' + attr + ']')) {
+        element.setAttribute(destination, t(element.getAttribute(attr)));
+      }
+    }
+    const languageButton = $('language-toggle');
+    languageButton.textContent = language === 'en' ? '中文' : 'EN';
+    languageButton.setAttribute('aria-label', t('switchLanguage'));
+    languageButton.setAttribute('title', t('switchLanguage'));
+  }
+  function setLanguage(next, updateURL = true) {
+    if (next !== 'en' && next !== 'zh') return;
+    language = next;
+    try { localStorage.setItem(LANGUAGE_KEY, language); } catch (_) { /* Storage is optional. */ }
+    if (updateURL) {
+      const url = new URL(window.location.href);
+      url.searchParams.set('lang', language);
+      try { history.replaceState(null, '', url); } catch (_) { /* file:// fallback */ }
+    }
+    renderLanguage();
+    // Runtime labels reflect the active state, not only their initial HTML.
+    if (typeof paused === 'boolean') $('pause-toggle').textContent = t(paused ? 'resume' : 'pause');
+    if (typeof playingDemo === 'boolean') $('replay-demo').textContent = t(playingDemo ? 'stop' : 'play');
+  }
+  renderLanguage();
+  const host = $('ripple-background');
   const presetNames = ['reference', 'warm', 'dark'];
   const requestedPreset = params.get('preset');
   const initialPreset = presetNames.includes(requestedPreset) ? requestedPreset : 'reference';
@@ -2257,7 +2442,7 @@ if (typeof window !== 'undefined') window.DigitalRipples = DigitalRipples;
     engine = new window.DigitalRipples(host, options);
   } catch (error) {
     $('load-error').hidden = false;
-    $('load-error').textContent = `背景初始化失败：${error.message || '请重新加载页面。'}`;
+    $('load-error').textContent = `${t('errorInit')}: ${error.message || t('errorReload')}`;
     $('first-click-hint').hidden = true;
     return;
   }
@@ -2297,7 +2482,7 @@ if (typeof window !== 'undefined') window.DigitalRipples = DigitalRipples;
     if (paused) engine.pause();
     else engine.resume();
     $('pause-toggle').setAttribute('aria-pressed', String(paused));
-    $('pause-toggle').textContent = paused ? '继续动画' : '暂停动画';
+    $('pause-toggle').textContent = t(paused ? 'resume' : 'pause');
   }
 
   function refreshControls() {
@@ -2373,7 +2558,7 @@ if (typeof window !== 'undefined') window.DigitalRipples = DigitalRipples;
     demoTimers.forEach(clearTimeout);
     demoTimers = [];
     playingDemo = false;
-    $('replay-demo').textContent = '播放点击示范';
+    $('replay-demo').textContent = t('play');
     $('replay-demo').setAttribute('aria-pressed', 'false');
   }
 
@@ -2386,7 +2571,7 @@ if (typeof window !== 'undefined') window.DigitalRipples = DigitalRipples;
     engine.clear();
     if (paused) setPaused(false);
     playingDemo = true;
-    $('replay-demo').textContent = '停止点击示范';
+    $('replay-demo').textContent = t('stop');
     $('replay-demo').setAttribute('aria-pressed', 'true');
     const beats = [
       { at: 150, x: 0.31, y: 0.42, shape: 'ripple' },
@@ -2410,10 +2595,10 @@ if (typeof window !== 'undefined') window.DigitalRipples = DigitalRipples;
       if (Number.isFinite(state[slider.key])) embedOptions[slider.key] = Number(state[slider.key].toFixed(3));
     }
     return [
-      '<!-- 将 digital-ripples.js 放入你的网站目录；交互控件可加 data-ripple-ignore。 -->',
+      '<!-- Place digital-ripples.js next to your website. Add data-ripple-ignore to exclude elements. -->',
       '<div id="digital-ripples" aria-hidden="true" style="position:fixed;inset:0;z-index:0"></div>',
       '<main style="position:relative;z-index:1">',
-      '  <!-- 在这里放网页内容。按钮、链接、输入框会自动避开波纹。 -->',
+      '  <!-- Your content goes here. Buttons, links and inputs are automatically excluded. -->',
       '</main>',
       '<script src="./digital-ripples.js"><\/script>',
       '<script>',
@@ -2428,7 +2613,7 @@ if (typeof window !== 'undefined') window.DigitalRipples = DigitalRipples;
       if (!navigator.clipboard || !window.isSecureContext) throw new Error('Clipboard API unavailable');
       await navigator.clipboard.writeText(code);
       $('copy-fallback').hidden = true;
-      toast('嵌入代码已复制。请同时复制 digital-ripples.js 文件。');
+      toast(t('toastCopiedAsset'));
     } catch (_) {
       const textarea = $('embed-code');
       $('copy-fallback').hidden = false;
@@ -2437,10 +2622,11 @@ if (typeof window !== 'undefined') window.DigitalRipples = DigitalRipples;
       textarea.select();
       let copied = false;
       try { copied = document.execCommand('copy'); } catch (_) { /* Keep the visible, selected fallback. */ }
-      toast(copied ? '嵌入代码已复制。' : '代码已选中，请按 Ctrl+C / ⌘C 复制。');
+      toast(t(copied ? 'toastCopied' : 'toastManualCopy'));
     }
   }
 
+  $('language-toggle').addEventListener('click', () => setLanguage(language === 'en' ? 'zh' : 'en'));
   $('preset-toggle').addEventListener('click', () => setPresetMenu($('preset-menu').hidden));
   $('preset-menu').addEventListener('click', (event) => {
     const button = event.target.closest('button[data-preset]');
@@ -2488,7 +2674,7 @@ if (typeof window !== 'undefined') window.DigitalRipples = DigitalRipples;
     setPaused(false);
     refreshControls();
     $('copy-fallback').hidden = true;
-    toast('已恢复当前预设。');
+    toast(t('toastReset'));
   });
   $('replay-demo').addEventListener('click', replayDemo);
   $('copy-embed').addEventListener('click', copyEmbed);
@@ -2507,7 +2693,7 @@ if (typeof window !== 'undefined') window.DigitalRipples = DigitalRipples;
   host.addEventListener('ripple', dismissHint);
   host.addEventListener('error', (event) => {
     $('load-error').hidden = false;
-    $('load-error').textContent = `背景加载失败：${event.detail?.message || '当前浏览器没有可用的绘图环境。'}`;
+    $('load-error').textContent = `${t('errorDraw')}: ${event.detail?.message || t('errorUnavailable')}`;
   });
   host.addEventListener('ready', () => { $('load-error').hidden = true; });
   host.addEventListener('pointerdown', dismissHint, { passive: true });
@@ -2585,9 +2771,12 @@ if (typeof window !== 'undefined') window.DigitalRipples = DigitalRipples;
     stopDemo,
     setUIHidden,
     getEmbedSnippet: makeEmbedSnippet,
-    getState: () => ({ preset, paused, hiddenUI, playingDemo, options: getOptions(), stats: engine.getStats() }),
+    setLanguage,
+    getLanguage: () => language,
+    getState: () => ({ language, preset, paused, hiddenUI, playingDemo, options: getOptions(), stats: engine.getStats() }),
   });
 })();
 </script>
 </body>
 </html>
+

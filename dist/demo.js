@@ -3,8 +3,188 @@
   'use strict';
 
   const $ = (id) => document.getElementById(id);
-  const host = $('ripple-background');
   const params = new URLSearchParams(window.location.search);
+  const LANGUAGE_KEY = 'clow-waves-web.demo.language';
+  function preferredLanguage() {
+    const query = params.get('lang');
+    if (query === 'en' || query === 'zh') return query;
+    try { return localStorage.getItem(LANGUAGE_KEY) === 'zh' ? 'zh' : 'en'; }
+    catch (_) { return 'en'; }
+  }
+  let language = preferredLanguage();
+  const translations = {
+  "en": {
+    "pageTitle": "Clow Waves Web · Interactive ASCII Background",
+    "pageDescription": "Explore flowing ASCII waves and interactive digital ripples, built with WebGL2. An unofficial web adaptation of Orgtree.",
+    "brandLabel": "Clow Waves Web interactive background demo",
+    "brandCaption": "Interactive background",
+    "toolbarLabel": "Demo controls",
+    "presetToggle": "Presets",
+    "presetMenu": "Appearance presets",
+    "presetReference": "Reference · Paper",
+    "presetWarm": "Warm · Ivory",
+    "presetDark": "Dark · Midnight",
+    "presetReferenceDescription": "Neutral ink, luminous backdrop",
+    "presetWarmDescription": "Soft, warm paper tones",
+    "presetDarkDescription": "For dark-themed personal sites",
+    "settingsToggle": "Customize",
+    "cleanToggle": "Clean view",
+    "cleanTitle": "Hide controls (H)",
+    "clickHint": "Click anywhere to make waves",
+    "inputLabel": "RIPPLE LAB",
+    "inputPlaceholder": "Type heart or circle, then press Enter",
+    "submitLabel": "Trigger a ripple with the entered text",
+    "submitTitle": "Trigger ripple (Enter)",
+    "inputExplanation": "This is a local visual effect, not an AI chat. Your text is never sent. Try “heart” or “circle”.",
+    "settingsTitle": "Make the waves your own",
+    "closeSettings": "Close settings",
+    "panelIntro": "Changes take effect instantly. Click the empty background to interact.",
+    "presetLabel": "Background preset",
+    "shapeLabel": "Ripple shape",
+    "glyphLabel": "Character pool",
+    "presetReferenceOption": "Reference · Paper",
+    "presetWarmOption": "Warm · Ivory",
+    "presetDarkOption": "Dark · Midnight",
+    "shapeAuto": "Circle · Circle · Heart",
+    "shapeCircle": "Circular ripple",
+    "shapeHeart": "Heart ripple",
+    "glyphMixed": "Mixed characters",
+    "glyphLetters": "More letters",
+    "glyphDigits": "More digits",
+    "scaleLabel": "Glyph size",
+    "ambientLabel": "Ambient density",
+    "rippleLabel": "Ripple intensity",
+    "speedLabel": "Flow speed",
+    "pause": "Pause animation",
+    "resume": "Resume animation",
+    "reset": "Reset preset",
+    "play": "Play click sequence",
+    "stop": "Stop sequence",
+    "copy": "Copy embed code",
+    "panelFootnote": "Press H for clean view, Esc to close. The input only triggers visual effects.",
+    "copyFallback": "Select and copy the code below",
+    "restoreLabel": "Show controls",
+    "restoreAria": "Show demo controls (H)",
+    "restoreTitle": "Show controls (H)",
+    "errorLoad": "Failed to load the effect. Keep digital-ripples.js next to this page.",
+    "errorJS": "Enable JavaScript to view the animated ASCII background.",
+    "credits": "Based on Orgtree · Independent unofficial demo",
+    "sourceLink": "Source ↗",
+    "switchLanguage": "Switch to Chinese",
+    "toastReset": "Current preset restored.",
+    "toastCopiedAsset": "Embed code copied. Also include digital-ripples.js in your site.",
+    "toastCopied": "Embed code copied.",
+    "toastManualCopy": "Code selected. Press Ctrl+C / ⌘C to copy.",
+    "errorInit": "Background initialization failed",
+    "errorReload": "Please reload the page.",
+    "errorDraw": "Failed to load background",
+    "errorUnavailable": "No supported graphics renderer is available in this browser."
+  },
+  "zh": {
+    "pageTitle": "Clow Waves Web · 交互式字符波纹背景",
+    "pageDescription": "探索 WebGL2 实现的流动 ASCII 字符背景与交互式数字波纹。基于 Orgtree 的非官方网页改编。",
+    "brandLabel": "Clow Waves Web 交互背景演示",
+    "brandCaption": "交互式背景",
+    "toolbarLabel": "演示控制",
+    "presetToggle": "预设",
+    "presetMenu": "外观预设",
+    "presetReference": "参考 · 纸白",
+    "presetWarm": "暖色 · 米白",
+    "presetDark": "深色 · 午夜",
+    "presetReferenceDescription": "中性字符，明亮背景",
+    "presetWarmDescription": "柔和的暖纸色调",
+    "presetDarkDescription": "适合深色个人网页",
+    "settingsToggle": "调节",
+    "cleanToggle": "纯背景",
+    "cleanTitle": "隐藏控件（H）",
+    "clickHint": "点击空白处，看看波纹",
+    "inputLabel": "波纹演示",
+    "inputPlaceholder": "输入“爱心”或“圆形”，按 Enter 触发波纹",
+    "submitLabel": "根据输入文字触发波纹",
+    "submitTitle": "触发波纹（Enter）",
+    "inputExplanation": "这里只是本地视觉特效，不是 AI 对话。文字不会被发送。可输入“爱心”或“圆形”。",
+    "settingsTitle": "让波纹适合你的网页",
+    "closeSettings": "关闭调节面板",
+    "panelIntro": "调整会立即生效。点击背景仍可激起波纹。",
+    "presetLabel": "背景预设",
+    "shapeLabel": "点击形状",
+    "glyphLabel": "字符组合",
+    "presetReferenceOption": "参考 · 纸白",
+    "presetWarmOption": "暖色 · 米白",
+    "presetDarkOption": "深色 · 午夜",
+    "shapeAuto": "圆形 · 圆形 · 爱心",
+    "shapeCircle": "圆形波纹",
+    "shapeHeart": "爱心波纹",
+    "glyphMixed": "混合字符",
+    "glyphLetters": "字母较多",
+    "glyphDigits": "数字较多",
+    "scaleLabel": "字符大小",
+    "ambientLabel": "背景字符浓度",
+    "rippleLabel": "点击波纹浓度",
+    "speedLabel": "流动速度",
+    "pause": "暂停动画",
+    "resume": "继续动画",
+    "reset": "恢复预设",
+    "play": "播放点击示范",
+    "stop": "停止点击示范",
+    "copy": "复制嵌入代码",
+    "panelFootnote": "按 H 隐藏控件，Esc 关闭面板。输入框只用来触发视觉特效。",
+    "copyFallback": "请选中并复制以下代码",
+    "restoreLabel": "显示控件",
+    "restoreAria": "显示演示控件（H）",
+    "restoreTitle": "显示控件（H）",
+    "errorLoad": "背景加载失败。请确认 digital-ripples.js 与此页面位于同一目录。",
+    "errorJS": "请启用 JavaScript 以查看动态字符背景。",
+    "credits": "基于 Orgtree · 非官方独立演示",
+    "sourceLink": "源代码 ↗",
+    "switchLanguage": "切换到英文",
+    "toastReset": "已恢复当前预设。",
+    "toastCopiedAsset": "嵌入代码已复制。请同时复制 digital-ripples.js 文件。",
+    "toastCopied": "嵌入代码已复制。",
+    "toastManualCopy": "代码已选中，请按 Ctrl+C / ⌘C 复制。",
+    "errorInit": "背景初始化失败",
+    "errorReload": "请重新加载页面。",
+    "errorDraw": "背景加载失败",
+    "errorUnavailable": "当前浏览器没有可用的绘图环境。"
+  }
+};
+  function t(key) { return translations[language][key] || translations.en[key] || key; }
+  function renderLanguage() {
+    document.documentElement.lang = language === 'zh' ? 'zh-CN' : 'en';
+    for (const element of document.querySelectorAll('[data-i18n]')) {
+      element.textContent = t(element.dataset.i18n);
+    }
+    for (const [attr, destination] of [
+      ['data-i18n-aria', 'aria-label'],
+      ['data-i18n-title', 'title'],
+      ['data-i18n-placeholder', 'placeholder'],
+      ['data-i18n-content', 'content'],
+    ]) {
+      for (const element of document.querySelectorAll('[' + attr + ']')) {
+        element.setAttribute(destination, t(element.getAttribute(attr)));
+      }
+    }
+    const languageButton = $('language-toggle');
+    languageButton.textContent = language === 'en' ? '中文' : 'EN';
+    languageButton.setAttribute('aria-label', t('switchLanguage'));
+    languageButton.setAttribute('title', t('switchLanguage'));
+  }
+  function setLanguage(next, updateURL = true) {
+    if (next !== 'en' && next !== 'zh') return;
+    language = next;
+    try { localStorage.setItem(LANGUAGE_KEY, language); } catch (_) { /* Storage is optional. */ }
+    if (updateURL) {
+      const url = new URL(window.location.href);
+      url.searchParams.set('lang', language);
+      try { history.replaceState(null, '', url); } catch (_) { /* file:// fallback */ }
+    }
+    renderLanguage();
+    // Runtime labels reflect the active state, not only their initial HTML.
+    if (typeof paused === 'boolean') $('pause-toggle').textContent = t(paused ? 'resume' : 'pause');
+    if (typeof playingDemo === 'boolean') $('replay-demo').textContent = t(playingDemo ? 'stop' : 'play');
+  }
+  renderLanguage();
+  const host = $('ripple-background');
   const presetNames = ['reference', 'warm', 'dark'];
   const requestedPreset = params.get('preset');
   const initialPreset = presetNames.includes(requestedPreset) ? requestedPreset : 'reference';
@@ -25,7 +205,7 @@
     engine = new window.DigitalRipples(host, options);
   } catch (error) {
     $('load-error').hidden = false;
-    $('load-error').textContent = `背景初始化失败：${error.message || '请重新加载页面。'}`;
+    $('load-error').textContent = `${t('errorInit')}: ${error.message || t('errorReload')}`;
     $('first-click-hint').hidden = true;
     return;
   }
@@ -65,7 +245,7 @@
     if (paused) engine.pause();
     else engine.resume();
     $('pause-toggle').setAttribute('aria-pressed', String(paused));
-    $('pause-toggle').textContent = paused ? '继续动画' : '暂停动画';
+    $('pause-toggle').textContent = t(paused ? 'resume' : 'pause');
   }
 
   function refreshControls() {
@@ -141,7 +321,7 @@
     demoTimers.forEach(clearTimeout);
     demoTimers = [];
     playingDemo = false;
-    $('replay-demo').textContent = '播放点击示范';
+    $('replay-demo').textContent = t('play');
     $('replay-demo').setAttribute('aria-pressed', 'false');
   }
 
@@ -154,7 +334,7 @@
     engine.clear();
     if (paused) setPaused(false);
     playingDemo = true;
-    $('replay-demo').textContent = '停止点击示范';
+    $('replay-demo').textContent = t('stop');
     $('replay-demo').setAttribute('aria-pressed', 'true');
     const beats = [
       { at: 150, x: 0.31, y: 0.42, shape: 'ripple' },
@@ -178,10 +358,10 @@
       if (Number.isFinite(state[slider.key])) embedOptions[slider.key] = Number(state[slider.key].toFixed(3));
     }
     return [
-      '<!-- 将 digital-ripples.js 放入你的网站目录；交互控件可加 data-ripple-ignore。 -->',
+      '<!-- Place digital-ripples.js next to your website. Add data-ripple-ignore to exclude elements. -->',
       '<div id="digital-ripples" aria-hidden="true" style="position:fixed;inset:0;z-index:0"></div>',
       '<main style="position:relative;z-index:1">',
-      '  <!-- 在这里放网页内容。按钮、链接、输入框会自动避开波纹。 -->',
+      '  <!-- Your content goes here. Buttons, links and inputs are automatically excluded. -->',
       '</main>',
       '<script src="./digital-ripples.js"></script>',
       '<script>',
@@ -196,7 +376,7 @@
       if (!navigator.clipboard || !window.isSecureContext) throw new Error('Clipboard API unavailable');
       await navigator.clipboard.writeText(code);
       $('copy-fallback').hidden = true;
-      toast('嵌入代码已复制。请同时复制 digital-ripples.js 文件。');
+      toast(t('toastCopiedAsset'));
     } catch (_) {
       const textarea = $('embed-code');
       $('copy-fallback').hidden = false;
@@ -205,10 +385,11 @@
       textarea.select();
       let copied = false;
       try { copied = document.execCommand('copy'); } catch (_) { /* Keep the visible, selected fallback. */ }
-      toast(copied ? '嵌入代码已复制。' : '代码已选中，请按 Ctrl+C / ⌘C 复制。');
+      toast(t(copied ? 'toastCopied' : 'toastManualCopy'));
     }
   }
 
+  $('language-toggle').addEventListener('click', () => setLanguage(language === 'en' ? 'zh' : 'en'));
   $('preset-toggle').addEventListener('click', () => setPresetMenu($('preset-menu').hidden));
   $('preset-menu').addEventListener('click', (event) => {
     const button = event.target.closest('button[data-preset]');
@@ -256,7 +437,7 @@
     setPaused(false);
     refreshControls();
     $('copy-fallback').hidden = true;
-    toast('已恢复当前预设。');
+    toast(t('toastReset'));
   });
   $('replay-demo').addEventListener('click', replayDemo);
   $('copy-embed').addEventListener('click', copyEmbed);
@@ -275,7 +456,7 @@
   host.addEventListener('ripple', dismissHint);
   host.addEventListener('error', (event) => {
     $('load-error').hidden = false;
-    $('load-error').textContent = `背景加载失败：${event.detail?.message || '当前浏览器没有可用的绘图环境。'}`;
+    $('load-error').textContent = `${t('errorDraw')}: ${event.detail?.message || t('errorUnavailable')}`;
   });
   host.addEventListener('ready', () => { $('load-error').hidden = true; });
   host.addEventListener('pointerdown', dismissHint, { passive: true });
@@ -353,6 +534,8 @@
     stopDemo,
     setUIHidden,
     getEmbedSnippet: makeEmbedSnippet,
-    getState: () => ({ preset, paused, hiddenUI, playingDemo, options: getOptions(), stats: engine.getStats() }),
+    setLanguage,
+    getLanguage: () => language,
+    getState: () => ({ language, preset, paused, hiddenUI, playingDemo, options: getOptions(), stats: engine.getStats() }),
   });
 })();
