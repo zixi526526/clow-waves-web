@@ -1,5 +1,7 @@
 # Clow Waves Web · 可嵌入网页的数字波纹
 
+> **[在线演示：https://clow-waves-web.pages.dev/?lang=zh](https://clow-waves-web.pages.dev/?lang=zh)**
+
 > **Demo 界面支持英语和中文切换，默认英语。** 右上角点击「中文 / EN」，可通过 `?lang=zh` 分享中文界面。切换语言不会中断波纹动画。
 
 根据两段 Claude Desktop 参考视频重建的流动字符背景与点击特效。提供浏览器可直接运行的成品、可独立接入的组件、源码和 React 示例。

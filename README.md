@@ -19,6 +19,8 @@ A standalone, interactive **WebGL2 ASCII wave / digital ripple background** for 
 
 ## Try the demo
 
+**[Open the live demo → https://clow-waves-web.pages.dev/](https://clow-waves-web.pages.dev/)** — deployed with Cloudflare Pages; pushes to `main` automatically update the site.
+
 🌐 **Language:** The live demo is **English-first**. Click **中文** in the top-right corner to switch the entire UI to Chinese, and **EN** to switch back. The choice is saved locally; use `?lang=en` or `?lang=zh` to link to a specific locale. Language switching does not restart the ripple field.
 
 **Offline, no installation:** Download and open [`digital-ripples-standalone.html`](digital-ripples-standalone.html). Click the empty background to generate ripples; press **H** to toggle the interface, and use the controls to change the preset and shape.

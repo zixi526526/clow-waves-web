@@ -2,6 +2,10 @@
 
 ## Cloudflare Pages (recommended)
 
+**Live production demo:** https://clow-waves-web.pages.dev/
+
+**Current configuration:** GitHub integration enabled for `zixi526526/clow-waves-web`, production branch `main`, output directory `dist` and automatic production deployments.
+
 The live interactive demo is entirely static. No backend, user credentials, analytics, cookies or APIs are required by the app.
 
 ### Connect GitHub (automatic updates)
