@@ -1,0 +1,41 @@
+name: Refresh README animation
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - scripts/generate-readme-gif.py
+      - .github/workflows/readme-preview.yml
+
+permissions:
+  contents: write
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install capture dependencies
+        run: |
+          python -m pip install --upgrade pip playwright
+          python -m playwright install --with-deps chromium
+          if ! command -v ffmpeg; then sudo apt-get update && sudo apt-get install -y ffmpeg; fi
+      - name: Capture animated demonstration
+        run: python scripts/generate-readme-gif.py
+      - name: Commit generated GIF
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add preview/demo.gif
+          if git diff --cached --quiet; then
+            echo 'README GIF is unchanged.'
+          else
+            git commit -m 'docs: refresh animated README preview'
+            git push origin HEAD:main
+          fi
