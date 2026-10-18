@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>局部区域接入 · Digital Ripples</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f2f1eb; color: #41413a; font: 16px/1.8 system-ui,sans-serif; }
+    header, article, footer { max-width: 850px; margin: auto; padding: 50px 28px; }
+    .hero { position: relative; min-height: 440px; height: 65vh; background: #fbfbf8; }
+    #hero-background { position: absolute; inset: 0; pointer-events: none; }
+    .hero-copy { position: relative; z-index: 1; padding: 110px 28px; max-width: 850px; margin: auto; }
+    h1 { font-size: clamp(30px,5vw,52px); font-weight: 450; line-height: 1.4; }
+    article { min-height: 65vh; }
+  </style>
+</head>
+<body>
+  <header>Digital Ripples / 局部背景示例</header>
+  <section class="hero">
+    <div id="hero-background" aria-hidden="true"></div>
+    <div class="hero-copy"><h1>只在这一区域流动。</h1><p>滚动网页后，点击位置仍会以这个区域为准。</p></div>
+  </section>
+  <article><h2>正文保持原来的布局</h2><p>背景滚出视口时会暂停，回到视口时继续。这里可以放文章、项目列表或其他内容。</p></article>
+  <footer>背景之外的点击不会触发这个区域的波纹。</footer>
+  <script src="../dist/digital-ripples.js"></script>
+  <script>const heroRipples = new DigitalRipples('#hero-background', { preset: 'warm' });</script>
+</body>
+</html>

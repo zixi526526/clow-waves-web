@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="description" content="以字符网格重现静谧的动态背景与点击数字波纹。可直接嵌入个人网页的 Clow Waves Web 演示。" />
+    <title>Clow Waves Web · 交互背景</title>
+    <link rel="stylesheet" href="./demo.css" />
+    <script defer src="./digital-ripples.js"></script>
+    <script defer src="./demo.js"></script>
+  </head>
+  <body data-preset="reference">
+    <div id="ripple-background" aria-hidden="true"></div>
+
+    <header class="topbar demo-interface" data-ripple-ignore>
+      <div class="brand" aria-label="Clow Waves Web 交互背景演示">Clow Waves Web<span class="brand-caption">交互背景</span></div>
+      <nav class="toolbar" aria-label="演示控制">
+        <div class="preset-wrap">
+          <button id="preset-toggle" class="text-button" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="preset-menu">预设<span class="chevron" aria-hidden="true"></span></button>
+          <div id="preset-menu" class="preset-menu" role="menu" aria-label="背景预设" hidden>
+            <button class="preset-item" type="button" role="menuitemradio" aria-checked="true" data-preset="reference"><span class="preset-swatch swatch-reference" aria-hidden="true"></span><span>视频二 · 纸白<span class="menu-description">中性灰字符，明亮背景</span></span><span class="preset-check" aria-hidden="true">✓</span></button>
+            <button class="preset-item" type="button" role="menuitemradio" aria-checked="false" data-preset="warm"><span class="preset-swatch swatch-warm" aria-hidden="true"></span><span>视频一 · 暖白<span class="menu-description">柔和的暖纸色调</span></span><span class="preset-check" aria-hidden="true">✓</span></button>
+            <button class="preset-item" type="button" role="menuitemradio" aria-checked="false" data-preset="dark"><span class="preset-swatch swatch-dark" aria-hidden="true"></span><span>深色 · 个人扩展<span class="menu-description">适合深色个人网页</span></span><span class="preset-check" aria-hidden="true">✓</span></button>
+          </div>
+        </div>
+        <button id="settings-toggle" class="text-button" type="button" aria-expanded="false" aria-controls="settings-panel">调节</button>
+        <button id="clean-toggle" class="text-button" type="button" title="隐藏控件（H）">纯背景</button>
+      </nav>
+    </header>
+
+    <main class="demo-interface">
+      <p id="first-click-hint" class="first-click-hint">点击空白处，看看波纹</p>
+      <form id="ripple-form" class="ripple-form" data-ripple-ignore autocomplete="off">
+        <label class="input-label" for="ripple-text">波纹演示</label>
+        <input id="ripple-text" name="ripple-text" type="text" maxlength="160" placeholder="输入文字，按 Enter 激起波纹" aria-describedby="input-explanation" spellcheck="false" />
+        <button id="text-ripple-button" class="submit-button" type="submit" aria-label="用输入的文字触发波纹" title="触发波纹（Enter）"><span aria-hidden="true">↵</span></button>
+        <span id="input-explanation" class="sr-only">这是本地特效演示，不是 AI 对话。文字只用于选择波纹形状，不会被发送。可输入“爱心”或“圆形”试试。</span>
+      </form>
+    </main>
+
+    <section id="settings-panel" class="settings-panel demo-interface" role="dialog" aria-modal="false" aria-labelledby="settings-title" data-ripple-ignore hidden>
+      <div class="panel-heading"><h1 id="settings-title">让波纹适合你的网页</h1><button id="settings-close" class="icon-button" type="button" aria-label="关闭调节面板">×</button></div>
+      <p class="panel-intro">调整会立即生效。点击背景仍可激起波纹。</p>
+      <div class="select-row"><label for="preset-select">背景预设</label><select id="preset-select"><option value="reference">视频二 · 纸白</option><option value="warm">视频一 · 暖白</option><option value="dark">深色 · 个人扩展</option></select></div>
+      <div class="select-row"><label for="shape-select">点击形状</label><select id="shape-select"><option value="auto">圆形、圆形、爱心</option><option value="ripple">圆形波纹</option><option value="heart">爱心</option></select></div>
+      <div class="select-row"><label for="glyph-select">字符组合</label><select id="glyph-select"><option value="mixed">混合字符</option><option value="lettered">字母较多</option><option value="figured">数字较多</option></select></div>
+      <div class="range-control"><div class="range-heading"><label for="scale-range">字符大小</label><output id="scale-output" for="scale-range">1.00×</output></div><input id="scale-range" type="range" min="0.65" max="1.75" step="0.05" value="1" data-option="scale" /></div>
+      <div class="range-control"><div class="range-heading"><label for="ambient-opacity-range">背景字符浓度</label><output id="ambient-opacity-output" for="ambient-opacity-range">0.075</output></div><input id="ambient-opacity-range" type="range" min="0.02" max="0.20" step="0.005" value="0.075" data-option="ambientOpacity" /></div>
+      <div class="range-control"><div class="range-heading"><label for="ripple-opacity-range">点击波纹浓度</label><output id="ripple-opacity-output" for="ripple-opacity-range">0.40</output></div><input id="ripple-opacity-range" type="range" min="0.10" max="0.80" step="0.01" value="0.40" data-option="rippleOpacity" /></div>
+      <div class="range-control"><div class="range-heading"><label for="speed-range">流动速度</label><output id="speed-output" for="speed-range">1.00×</output></div><input id="speed-range" type="range" min="0.40" max="1.60" step="0.05" value="1" data-option="speed" /></div>
+      <div class="panel-actions"><button id="pause-toggle" class="panel-button" type="button" aria-pressed="false">暂停动画</button><button id="reset-settings" class="panel-button" type="button">恢复预设</button></div>
+      <div class="panel-actions"><button id="replay-demo" class="panel-button" type="button">播放点击示范</button><button id="copy-embed" class="panel-button" type="button">复制嵌入代码</button></div>
+      <p class="panel-footnote">按 H 隐藏控件，Esc 关闭面板。文字输入框仅用于演示波纹。</p>
+      <div id="copy-fallback" class="copy-fallback" hidden><label for="embed-code">请选中并复制以下代码</label><textarea id="embed-code" rows="6" readonly spellcheck="false"></textarea></div>
+    </section>
+
+    <button id="restore-interface" class="restore-interface" type="button" data-ripple-ignore hidden aria-label="显示演示控件（H）" title="显示控件（H）"><span aria-hidden="true">◌</span><span class="restore-label">显示控件</span></button>
+    <div id="demo-status" class="status-toast" role="status" aria-live="polite" aria-atomic="true" data-ripple-ignore></div>
+    <div id="load-error" class="load-error" role="alert" data-ripple-ignore hidden>背景加载失败。请确认 digital-ripples.js 与此页面位于同一目录。</div>
+    <noscript><p class="load-error">请启用 JavaScript 以查看动态字符背景。</p></noscript>
+  </body>
+</html>
