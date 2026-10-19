@@ -62,12 +62,20 @@ test('source credit remains visible as a readable pill in both online and offlin
   assert.match(html, /Based on Orgtree/);
 });
 
-test('credit aligns below brand and remains visible at mobile widths', () => {
+test('source credit is centered below the bottom input in both online and offline demos', () => {
   const css = read('dist/demo.css');
-  assert.match(css, /\.demo-credits \{[\s\S]*?top: calc\(max\(24px, env\(safe-area-inset-top\)\) \+ 44px\)/);
-  assert.match(css, /@media \(max-width: 640px\) \{[\s\S]*?\.demo-credits \{[\s\S]*?top: calc\(max\(17px, env\(safe-area-inset-top\)\) \+ 42px\)/);
-  assert.doesNotMatch(css, /\.demo-credits \{[^}]*bottom:/);
-  assert.match(offline, /source credit aligned below the project brand/);
+  assert.match(css, /\.demo-bottom \{[^}]*flex-direction: column/);
+  assert.match(css, /\.demo-credits \{[^}]*width: max-content/);
+  assert.match(css, /\.demo-credits \{[^}]*position: relative/);
+  assert.match(css, /\.demo-bottom \{[^}]*pointer-events: none/);
+  for (const page of [html, offline]) {
+    const footer = page.indexOf('class="demo-bottom"');
+    const form = page.indexOf('id="ripple-form"', footer);
+    const credit = page.indexOf('class="demo-credits', footer);
+    const closeMain = page.indexOf('</main>', footer);
+    assert.ok(footer >= 0 && form > footer && credit > form && closeMain > credit, 'credit must follow form inside bottom stack');
+    assert.equal(page.match(/class="demo-credits/g)?.length, 1, 'credit should exist once');
+  }
 });
 test('demo starts with glyph scale 0.65 and symmetric 0.45–0.85 adjustment range', () => {
   const range = /id="scale-range" max="0\.85" min="0\.45" step="0\.05" type="range" value="0\.65"/;
