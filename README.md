@@ -6,9 +6,11 @@
 
 Interactive, flowing ASCII waves and digital click ripples — a standalone, embeddable web background.
 
-[![Animated preview of the Clow Waves Web renderer](preview/demo.gif)](https://clow-waves-web.pages.dev/)
+[![Animated preview of the Clow Waves Web renderer](preview/demo.gif)](https://fluxarium.pages.dev/effects/clow-waves/)
 
-**[▶ Live demo](https://clow-waves-web.pages.dev/?lang=en)** · [中文演示](https://clow-waves-web.pages.dev/?lang=zh)
+**[▶ Interactive demo · Fluxarium](https://fluxarium.pages.dev/effects/clow-waves/)** · [Full-screen playground](https://fluxarium.pages.dev/play/clow-waves/) · [Legacy standalone demo](https://clow-waves-web.pages.dev/?lang=en)
+
+The current interactive showcase and controls are maintained in **Fluxarium**. This repository remains the source of truth for the embeddable Waves renderer, with its original standalone demo retained for compatibility.
 
 A flowing character background and interactive click effects, reconstructed with reference to two Claude Desktop demonstration videos. This repository includes a ready-to-run browser demo, an embeddable component, source code, and React examples. **The core ripple mathematics, glyph field, and WebGL renderer are substantially adapted from the MIT-licensed [Maurdekye/orgtree](https://github.com/Maurdekye/orgtree) project**, rather than invented from scratch here.
 
