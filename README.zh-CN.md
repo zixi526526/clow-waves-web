@@ -6,9 +6,11 @@
 
 交互式 ASCII 字符流与数字涟漪，可独立运行，也可以嵌入个人网站。
 
-[![Clow Waves Web 实际渲染的动态预览](preview/demo.gif)](https://clow-waves-web.pages.dev/?lang=zh)
+[![Clow Waves Web 实际渲染的动态预览](preview/demo.gif)](https://fluxarium.pages.dev/effects/clow-waves/?lang=zh)
 
-**[▶ 在线体验](https://clow-waves-web.pages.dev/?lang=zh)** · [English demo](https://clow-waves-web.pages.dev/?lang=en)
+**[▶ Fluxarium 交互演示](https://fluxarium.pages.dev/effects/clow-waves/?lang=zh)** · [全屏沉浸体验](https://fluxarium.pages.dev/play/clow-waves/?lang=zh) · [旧版独立 Demo](https://clow-waves-web.pages.dev/?lang=zh)
+
+当前的合集演示页面与控制界面由 **Fluxarium** 统一维护。本仓库仍然负责可嵌入的 Waves 渲染内核，并保留原来的独立 Demo 以兼容已有链接。
 
 > **语言说明：** 网页演示默认英语，右上角可切换「中文 / EN」，也可以通过 `?lang=zh` 直接打开中文界面；切换不会重启波纹动画。本页面顶部的 English / 简体中文则用于切换两份完整的 GitHub README 文档。
 
