@@ -6,27 +6,11 @@
 
 交互式 ASCII 字符流与数字涟漪，可独立运行，也可以嵌入个人网站。
 
-[![Clow Waves Web 实际渲染的动态预览](preview/demo.gif)](https://fluxarium.pages.dev/effects/clow-waves/?lang=zh)
+[![Clow Waves 动态预览](preview/demo.gif)](https://fluxarium.pages.dev/effects/clow-waves/?lang=zh)
 
-**[▶ Fluxarium 交互演示](https://fluxarium.pages.dev/effects/clow-waves/?lang=zh)** · [全屏沉浸体验](https://fluxarium.pages.dev/play/clow-waves/?lang=zh) · [旧版独立 Demo](https://clow-waves-web.pages.dev/?lang=zh)
+**[▶ Demo](https://fluxarium.pages.dev/effects/clow-waves/?lang=zh)** — 在 Fluxarium 中体验特效并调整参数。
 
-当前的合集演示页面与控制界面由 **Fluxarium** 统一维护。本仓库仍然负责可嵌入的 Waves 渲染内核，并保留原来的独立 Demo 以兼容已有链接。
-
-> **语言说明：** 网页演示默认英语，右上角可切换「中文 / EN」，也可以通过 `?lang=zh` 直接打开中文界面；切换不会重启波纹动画。本页面顶部的 English / 简体中文则用于切换两份完整的 GitHub README 文档。
-
-根据两段 Claude Desktop 参考视频重建的流动字符背景与点击特效。提供浏览器可直接运行的成品、可独立接入的组件、源码和 React 示例。
-
-## 先看效果
-
-直接双击根目录的 **`digital-ripples-standalone.html`**。它包含全部 CSS 和 JavaScript，离线可用，不必安装 Node.js、不必启动服务器。
-
-网页演示默认采用深色预设、0.65× 字符尺寸。点击空白处产生蓝色波纹，自动模式下按“圆形、圆形、心形”循环；快速移动鼠标会在字符云里留下较弱的扰动。第三次点击计数延续到当前组件被清空或卸载。
-
-右上角“预设”提供视频二纸白、视频一暖白、深色扩展；“调节”可以选择形状、字符池，调整大小、浓度和速度。“纯背景”或 **H** 隐藏前景界面；按 H、Esc 或右下角小按钮恢复。画面中央显示「随意点击，看看波纹」，首次点击背景后提示会自然淡出；来源说明仍位于底部居中。
-
-双击 `dist/index.html` 也可以运行，但须保留同目录的 JS 和 CSS。使用 HTTP 静态服务器时可访问 `?clean=1` 纯背景、`?demo=1` 点击示范、`?preset=warm` 暖白、`?seed=1701` 固定随机种子。这些参数也可以组合。
-
-网页演示的字符尺寸默认 0.65×，滑块范围为 0.45×–0.85×；可复用组件的独立默认值仍为 1.0。
+本仓库提供可嵌入的渲染组件、源码和使用示例。核心波纹算法、字符风场及 WebGL 渲染基于 MIT 许可的 [Maurdekye/orgtree](https://github.com/Maurdekye/orgtree) 改编。
 
 ## 最小接入：普通 HTML
 
@@ -159,7 +143,7 @@ effect.renderAt(8, [
 effect.resume();
 ```
 
-`renderAt()` 是明确的冻结/对照接口，不会继续自动播放。`dist/index.html?qa=1` 提供隔离的静态、圆形和心形按钮，普通页面不显示这些控件。
+`renderAt()` 是冻结画面以便对照的接口，不会继续自动播放。
 
 ## 实现原理与上游来源
 
@@ -196,8 +180,6 @@ npm run check
 
 | 文件 | 用途 |
 | --- | --- |
-| `digital-ripples-standalone.html` | 完整离线演示，一个文件 |
-| `dist/index.html` / `demo.css` / `demo.js` | 带可调界面的演示 |
 | `dist/digital-ripples.js` | 传统 `<script>` 接入，暴露 `window.DigitalRipples` |
 | `dist/digital-ripples.module.js` / `.d.ts` | 独立 ESM 与 TypeScript 类型 |
 | `src/field.ts` / `gl.ts` | 风场数学与 WebGL2 管线 |

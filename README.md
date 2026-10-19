@@ -6,27 +6,11 @@
 
 Interactive, flowing ASCII waves and digital click ripples — a standalone, embeddable web background.
 
-[![Animated preview of the Clow Waves Web renderer](preview/demo.gif)](https://fluxarium.pages.dev/effects/clow-waves/)
+[![Clow Waves preview](preview/demo.gif)](https://fluxarium.pages.dev/effects/clow-waves/)
 
-**[▶ Interactive demo · Fluxarium](https://fluxarium.pages.dev/effects/clow-waves/)** · [Full-screen playground](https://fluxarium.pages.dev/play/clow-waves/) · [Legacy standalone demo](https://clow-waves-web.pages.dev/?lang=en)
+**[▶ Demo](https://fluxarium.pages.dev/effects/clow-waves/)** — Interactive preview and controls on Fluxarium.
 
-The current interactive showcase and controls are maintained in **Fluxarium**. This repository remains the source of truth for the embeddable Waves renderer, with its original standalone demo retained for compatibility.
-
-A flowing character background and interactive click effects, reconstructed with reference to two Claude Desktop demonstration videos. This repository includes a ready-to-run browser demo, an embeddable component, source code, and React examples. **The core ripple mathematics, glyph field, and WebGL renderer are substantially adapted from the MIT-licensed [Maurdekye/orgtree](https://github.com/Maurdekye/orgtree) project**, rather than invented from scratch here.
-
-## See it in action
-
-Double-click **`digital-ripples-standalone.html`** at the repository root. It embeds all required CSS and JavaScript, runs offline, and needs neither Node.js nor a local server.
-
-The web demo opens in dark mode with a 0.65× glyph scale. Clicking empty space creates a blue ripple. In automatic mode, clicks cycle through **circle → circle → heart**; quick pointer movement leaves a subtler wake in the glyph cloud. The click counter continues until the component is cleared or destroyed.
-
-The top-right **Preset** control switches between a reference paper-white appearance, warm ivory, and a dark extension. **Adjust** lets you select the ripple shape and glyph pool, or modify scale, density, and speed. **Clean background** or **H** hides the foreground UI; press H, Esc, or the small corner button to restore it. The unobtrusive “Just click anywhere” hint fades after the first background click; the source attribution remains at the bottom center.
-
-You can also open `dist/index.html` directly, provided its companion JavaScript and CSS files remain beside it. When served over HTTP, query parameters include `?clean=1` (clean background), `?demo=1` (automatic click demonstration), `?preset=warm` (warm preset), and `?seed=1701` (fixed random seed). These parameters may be combined.
-
-**Demo language:** English is the default. Click **中文 / EN** at the top right to change the entire demo UI without restarting the ripple animation. You can also share [`?lang=en`](https://clow-waves-web.pages.dev/?lang=en) or [`?lang=zh`](https://clow-waves-web.pages.dev/?lang=zh). This setting belongs to the web demo; the language links at the top of this README switch between complete Markdown documents.
-
-The demo uses a 0.65× glyph scale, adjustable from 0.45× to 0.85×. The embeddable renderer retains its own default scale of 1.0.
+This repository provides the reusable renderer, source code and integration examples. The core ripple mathematics, glyph field and WebGL renderer are adapted from the MIT-licensed [Maurdekye/orgtree](https://github.com/Maurdekye/orgtree).
 
 ## Minimal integration: plain HTML
 
@@ -159,7 +143,7 @@ effect.renderAt(8, [
 effect.resume();
 ```
 
-`renderAt()` renders an explicit frozen comparison frame; it does not start playback. `dist/index.html?qa=1` exposes isolated static, circle, and heart test buttons; these controls are hidden from the regular demo.
+`renderAt()` renders an explicit frozen comparison frame; it does not start playback.
 
 ## Implementation and upstream references
 
@@ -192,12 +176,10 @@ npm run check
 
 The build uses Node's built-in type-stripping functionality and no third-party build dependencies. An `ExperimentalWarning: stripTypeScriptTypes` message is a Node API warning.
 
-Deploy `dist/` to any static host or web server, including Nginx, Caddy, Apache, and existing frontend applications. The effect does not call a backend, transmit typed input or pointer coordinates, or require an API key; rendering happens on the visitor's device. See [DEPLOYMENT.md](DEPLOYMENT.md) for Cloudflare Pages deployment (production branch `main`, output directory `dist`).
+Deploy `dist/` to any static host or web server, including Nginx, Caddy, Apache, and existing frontend applications. The effect does not call a backend, transmit typed input or pointer coordinates, or require an API key; rendering happens on the visitor's device. See [DEPLOYMENT.md](DEPLOYMENT.md) for build and hosting details.
 
 | File | Purpose |
 | --- | --- |
-| [`digital-ripples-standalone.html`](digital-ripples-standalone.html) | Fully self-contained offline demo |
-| `dist/index.html` / `demo.css` / `demo.js` | Configurable interactive demo |
 | [`dist/digital-ripples.js`](dist/digital-ripples.js) | Classic `<script>` build exposing `window.DigitalRipples` |
 | [`dist/digital-ripples.module.js`](dist/digital-ripples.module.js) / `.d.ts` | Standalone ESM and TypeScript declarations |
 | `src/field.ts` / `gl.ts` | Wind-field math and WebGL2 pipeline |
