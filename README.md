@@ -16,13 +16,15 @@ A flowing character background and interactive click effects, reconstructed with
 
 Double-click **`digital-ripples-standalone.html`** at the repository root. It embeds all required CSS and JavaScript, runs offline, and needs neither Node.js nor a local server.
 
-The initial screen shows a very faint cloud of gray characters. Clicking empty space creates a blue-violet ripple. In automatic mode, clicks cycle through **circle → circle → heart**; quick pointer movement leaves a subtler wake in the glyph cloud. The click counter continues until the component is cleared or destroyed.
+The web demo opens in dark mode with a 0.65× glyph scale. Clicking empty space creates a blue ripple. In automatic mode, clicks cycle through **circle → circle → heart**; quick pointer movement leaves a subtler wake in the glyph cloud. The click counter continues until the component is cleared or destroyed.
 
 The top-right **Preset** control switches between a reference paper-white appearance, warm ivory, and a dark extension. **Adjust** lets you select the ripple shape and glyph pool, or modify scale, density, and speed. **Clean background** or **H** hides the foreground UI; press H, Esc, or the small corner button to restore it. The input field is a local demo: type “heart” or “circle” and press Enter to trigger the specified shape.
 
 You can also open `dist/index.html` directly, provided its companion JavaScript and CSS files remain beside it. When served over HTTP, query parameters include `?clean=1` (clean background), `?demo=1` (automatic click demonstration), `?preset=warm` (warm preset), and `?seed=1701` (fixed random seed). These parameters may be combined.
 
 **Demo language:** English is the default. Click **中文 / EN** at the top right to change the entire demo UI without restarting the ripple animation. You can also share [`?lang=en`](https://clow-waves-web.pages.dev/?lang=en) or [`?lang=zh`](https://clow-waves-web.pages.dev/?lang=zh). This setting belongs to the web demo; the language links at the top of this README switch between complete Markdown documents.
+
+The demo uses a 0.65× glyph scale, adjustable from 0.45× to 0.85×. The embeddable renderer retains its own default scale of 1.0.
 
 ## Minimal integration: plain HTML
 
@@ -98,7 +100,7 @@ Do not instantiate the effect inside React's render function. Call `destroy()` o
 | `preset` | `'reference'` | Paper-white `'reference'`, warm ivory `'warm'`, or dark `'dark'` |
 | `shape` | `'auto'` | Cycles circle, circle, heart; or force `'ripple'` / `'heart'` |
 | `glyphPool` | `'mixed'` | Ordered glyph pools: `'mixed'` / `'lettered'` / `'figured'` |
-| `scale` | `1` | Overall glyph, scene, and ripple scale; 0.55–2.5 |
+| `scale` | `1` | Overall glyph, scene, and ripple scale; 0.45–2.5 |
 | `speed` | `1` | Shared multiplier for wind field, glyph changes, and ripples; 0.15–3 |
 | `ambientOpacity` | `0.075` | Relative ambient density; 0–0.6 (not final CSS alpha) |
 | `rippleOpacity` | `0.4` | Relative ripple highlight and residual trail strength; 0–1 |

@@ -185,12 +185,13 @@
   }
   renderLanguage();
   const host = $('ripple-background');
+  const DEFAULT_DEMO_GLYPH_SCALE = 0.65;
   const presetNames = ['reference', 'warm', 'dark'];
   const requestedPreset = params.get('preset');
   const initialPreset = presetNames.includes(requestedPreset) ? requestedPreset : 'dark';
   const seed = Number.parseInt(params.get('seed'), 10);
   const isQA = params.get('qa') === '1';
-  const options = { preset: initialPreset, interactive: true, respectReducedMotion: true, shape: 'auto' };
+  const options = { preset: initialPreset, scale: DEFAULT_DEMO_GLYPH_SCALE, interactive: true, respectReducedMotion: true, shape: 'auto' };
   if (Number.isFinite(seed)) options.seed = seed;
   else if (isQA) options.seed = 1701;
 
@@ -219,7 +220,7 @@
   let settingsReturnFocus;
 
   const sliders = [
-    { id: 'scale-range', output: 'scale-output', key: 'scale', fallback: 1, suffix: '×' },
+    { id: 'scale-range', output: 'scale-output', key: 'scale', fallback: DEFAULT_DEMO_GLYPH_SCALE, suffix: '×' },
     { id: 'ambient-opacity-range', output: 'ambient-opacity-output', key: 'ambientOpacity', fallback: 0.075, suffix: '', precision: 3 },
     { id: 'ripple-opacity-range', output: 'ripple-opacity-output', key: 'rippleOpacity', fallback: 0.4, suffix: '' },
     { id: 'speed-range', output: 'speed-output', key: 'speed', fallback: 1, suffix: '×' },
@@ -264,11 +265,16 @@
     }
   }
 
+  function applyDemoPreset(name) {
+    engine.setPreset(name);
+    engine.setOptions({ scale: DEFAULT_DEMO_GLYPH_SCALE });
+  }
+
   function setPreset(name) {
     if (!presetNames.includes(name)) return;
     stopDemo();
     preset = name;
-    engine.setPreset(name);
+    applyDemoPreset(name);
     refreshControls();
   }
 
@@ -432,7 +438,7 @@
   $('reset-settings').addEventListener('click', () => {
     stopDemo();
     engine.clear();
-    engine.setPreset(preset);
+    applyDemoPreset(preset);
     engine.setOptions({ shape: 'auto' });
     setPaused(false);
     refreshControls();

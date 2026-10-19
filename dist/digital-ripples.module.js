@@ -1724,7 +1724,7 @@ const rgba = (value, fallback) => {
 };
 function cleanOptions(raw, base = DEFAULTS) {
   const o = { ...base, ...raw };
-  o.scale = clip(o.scale, 0.55, 2.5, 1);
+  o.scale = clip(o.scale, 0.45, 2.5, 1);
   o.speed = clip(o.speed, 0.15, 3, 1);
   o.ambientOpacity = clip(o.ambientOpacity, 0, 0.6, .075);
   o.rippleOpacity = clip(o.rippleOpacity, 0, 1, .4);

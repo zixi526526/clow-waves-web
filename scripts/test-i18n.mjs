@@ -61,3 +61,26 @@ test('source credit remains visible as a readable pill in both online and offlin
   assert.match(offline, /backdrop-filter: blur\(12px\)/);
   assert.match(html, /Based on Orgtree/);
 });
+
+test('credit aligns below brand and remains visible at mobile widths', () => {
+  const css = read('dist/demo.css');
+  assert.match(css, /\.demo-credits \{[\s\S]*?top: calc\(max\(24px, env\(safe-area-inset-top\)\) \+ 44px\)/);
+  assert.match(css, /@media \(max-width: 640px\) \{[\s\S]*?\.demo-credits \{[\s\S]*?top: calc\(max\(17px, env\(safe-area-inset-top\)\) \+ 42px\)/);
+  assert.doesNotMatch(css, /\.demo-credits \{[^}]*bottom:/);
+  assert.match(offline, /source credit aligned below the project brand/);
+});
+test('demo starts with glyph scale 0.65 and symmetric 0.45–0.85 adjustment range', () => {
+  const range = /id="scale-range" max="0\.85" min="0\.45" step="0\.05" type="range" value="0\.65"/;
+  for (const page of [html, offline]) {
+    assert.match(page, range);
+    assert.match(page, /id="scale-output">0\.65×/);
+  }
+  assert.match(js, /const DEFAULT_DEMO_GLYPH_SCALE = 0\.65;/);
+  assert.match(js, /preset: initialPreset, scale: DEFAULT_DEMO_GLYPH_SCALE/);
+  assert.match(js, /engine\.setOptions\(\{ scale: DEFAULT_DEMO_GLYPH_SCALE \}\)/);
+  assert.match(js, /applyDemoPreset\(preset\)/);
+  assert.match(offline, /const DEFAULT_DEMO_GLYPH_SCALE = 0\.65;/);
+  for (const file of ['src/controller.js', 'dist/digital-ripples.js', 'dist/digital-ripples.module.js']) {
+    assert.match(read(file), /o\.scale = clip\(o\.scale, 0\.45, 2\.5, 1\);/);
+  }
+});
