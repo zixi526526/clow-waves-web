@@ -41,3 +41,23 @@ test('offline demo includes inlined bilingual scripts, stylesheet and attributio
   assert.doesNotMatch(offline.split('<script>')[0], /<script[^>]+src=/);
   assert.doesNotMatch(offline, /<link[^>]+href="\.\/demo\.css"/);
 });
+
+test('dark is the default demo presentation and explicit presets remain supported', () => {
+  assert.match(html, /<body data-preset="dark">/);
+  assert.match(html, /aria-checked="true" class="preset-item" data-preset="dark"/);
+  assert.match(html, /aria-checked="false" class="preset-item" data-preset="reference"/);
+  assert.match(html, /selected="" value="dark"/);
+  assert.match(js, /const initialPreset = presetNames\.includes\(requestedPreset\) \? requestedPreset : 'dark';/);
+  assert.match(offline, /<body data-preset="dark">/);
+  assert.match(offline, /const initialPreset = presetNames\.includes\(requestedPreset\) \? requestedPreset : 'dark';/);
+});
+
+test('source credit remains visible as a readable pill in both online and offline demo', () => {
+  const css = read('dist/demo.css');
+  assert.match(css, /\.demo-credits \{/);
+  assert.match(css, /\.demo-credits \{[\s\S]*?background: var\(--surface\)/);
+  assert.match(css, /\.demo-credits \{[\s\S]*?font-size: 11px/);
+  assert.doesNotMatch(css, /\.demo-credits span \{ display: none/);
+  assert.match(offline, /backdrop-filter: blur\(12px\)/);
+  assert.match(html, /Based on Orgtree/);
+});

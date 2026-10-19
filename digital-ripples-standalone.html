@@ -115,19 +115,62 @@ body.interface-hidden .status-toast { bottom: 30px; }
   *, *::before, *::after { scroll-behavior: auto !important; }
   .demo-interface, .first-click-hint, .restore-interface, .status-toast { transition: none; }
 }
-/* English-first / Chinese toggle and unobtrusive source credit. */
+/* English-first / Chinese toggle and clearly legible source attribution. */
 .language-toggle { font-weight: 600; letter-spacing: .03em; min-width: 37px; }
-.demo-credits { position: fixed; z-index: 6; left: max(30px,env(safe-area-inset-left)); bottom: max(37px,env(safe-area-inset-bottom)); color: var(--muted); font-size: 9px; display: flex; align-items: center; gap: 12px; opacity: .70; pointer-events: auto; }
-.demo-credits a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
-.demo-credits a:hover { color: var(--ink); }
-@media (max-width: 880px) { .demo-credits { bottom: max(110px, calc(env(safe-area-inset-bottom) + 84px)); } }
-@media (max-width: 640px) { .toolbar .text-button { padding: 8px 7px; } .demo-credits { bottom: max(90px, calc(env(safe-area-inset-bottom) + 68px)); font-size: 8px; max-width: 85vw; } }
-@media (max-width: 340px) { .demo-credits span { display: none; } }
+.demo-credits {
+  position: fixed;
+  z-index: 9;
+  left: max(30px, env(safe-area-inset-left));
+  bottom: max(32px, env(safe-area-inset-bottom));
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  max-width: calc(100vw - 36px);
+  padding: 9px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 18px rgba(30, 27, 22, 0.05);
+  color: var(--ink);
+  font-size: 11px;
+  line-height: 1.5;
+  opacity: .95;
+  pointer-events: auto;
+}
+.demo-credits a {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.demo-credits a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+/* Move the label above the input if their horizontal ranges could overlap. */
+@media (max-width: 1700px) {
+  .demo-credits {
+    bottom: max(110px, calc(env(safe-area-inset-bottom) + 85px));
+  }
+}
+@media (max-width: 640px) {
+  .toolbar .text-button { padding: 8px 7px; }
+  .demo-credits {
+    left: max(16px, env(safe-area-inset-left));
+    bottom: max(100px, calc(env(safe-area-inset-bottom) + 80px));
+    padding: 8px 11px;
+    border-radius: 14px;
+    font-size: 10px;
+  }
+}
 </style>
 
 
 </head>
-<body data-preset="reference">
+<body data-preset="dark">
 <div aria-hidden="true" id="ripple-background"></div>
 <header class="topbar demo-interface" data-ripple-ignore="">
 <div aria-label="Clow Waves Web interactive background demo" class="brand" data-i18n-aria="brandLabel">Clow Waves Web<span class="brand-caption" data-i18n="brandCaption">Interactive background</span></div>
@@ -135,9 +178,9 @@ body.interface-hidden .status-toast { bottom: 30px; }
 <div class="preset-wrap">
 <button aria-controls="preset-menu" aria-expanded="false" aria-haspopup="menu" class="text-button" id="preset-toggle" type="button"><span data-i18n="presetToggle">Presets</span><span aria-hidden="true" class="chevron"></span></button>
 <div aria-label="Appearance presets" class="preset-menu" data-i18n-aria="presetMenu" hidden="" id="preset-menu" role="menu">
-<button aria-checked="true" class="preset-item" data-preset="reference" role="menuitemradio" type="button"><span aria-hidden="true" class="preset-swatch swatch-reference"></span><span><span data-i18n="presetReference">Reference · Paper</span><span class="menu-description" data-i18n="presetReferenceDescription">Neutral ink, luminous backdrop</span></span><span aria-hidden="true" class="preset-check">✓</span></button>
+<button aria-checked="false" class="preset-item" data-preset="reference" role="menuitemradio" type="button"><span aria-hidden="true" class="preset-swatch swatch-reference"></span><span><span data-i18n="presetReference">Reference · Paper</span><span class="menu-description" data-i18n="presetReferenceDescription">Neutral ink, luminous backdrop</span></span><span aria-hidden="true" class="preset-check">✓</span></button>
 <button aria-checked="false" class="preset-item" data-preset="warm" role="menuitemradio" type="button"><span aria-hidden="true" class="preset-swatch swatch-warm"></span><span><span data-i18n="presetWarm">Warm · Ivory</span><span class="menu-description" data-i18n="presetWarmDescription">Soft, warm paper tones</span></span><span aria-hidden="true" class="preset-check">✓</span></button>
-<button aria-checked="false" class="preset-item" data-preset="dark" role="menuitemradio" type="button"><span aria-hidden="true" class="preset-swatch swatch-dark"></span><span><span data-i18n="presetDark">Dark · Midnight</span><span class="menu-description" data-i18n="presetDarkDescription">For dark-themed personal sites</span></span><span aria-hidden="true" class="preset-check">✓</span></button>
+<button aria-checked="true" class="preset-item" data-preset="dark" role="menuitemradio" type="button"><span aria-hidden="true" class="preset-swatch swatch-dark"></span><span><span data-i18n="presetDark">Dark · Midnight</span><span class="menu-description" data-i18n="presetDarkDescription">For dark-themed personal sites</span></span><span aria-hidden="true" class="preset-check">✓</span></button>
 </div>
 </div>
 <button aria-controls="settings-panel" aria-expanded="false" class="text-button" data-i18n="settingsToggle" id="settings-toggle" type="button">Customize</button>
@@ -156,7 +199,7 @@ body.interface-hidden .status-toast { bottom: 30px; }
 <section aria-labelledby="settings-title" aria-modal="false" class="settings-panel demo-interface" data-ripple-ignore="" hidden="" id="settings-panel" role="dialog">
 <div class="panel-heading"><h1 data-i18n="settingsTitle" id="settings-title">Make the waves your own</h1><button aria-label="Close settings" class="icon-button" data-i18n-aria="closeSettings" id="settings-close" type="button">×</button></div>
 <p class="panel-intro" data-i18n="panelIntro">Changes take effect instantly. Click the empty background to interact.</p>
-<div class="select-row"><label data-i18n="presetLabel" for="preset-select">Background preset</label><select id="preset-select"><option data-i18n="presetReferenceOption" value="reference">Reference · Paper</option><option data-i18n="presetWarmOption" value="warm">Warm · Ivory</option><option data-i18n="presetDarkOption" value="dark">Dark · Midnight</option></select></div>
+<div class="select-row"><label data-i18n="presetLabel" for="preset-select">Background preset</label><select id="preset-select"><option data-i18n="presetReferenceOption" value="reference">Reference · Paper</option><option data-i18n="presetWarmOption" value="warm">Warm · Ivory</option><option data-i18n="presetDarkOption" selected="" value="dark">Dark · Midnight</option></select></div>
 <div class="select-row"><label data-i18n="shapeLabel" for="shape-select">Ripple shape</label><select id="shape-select"><option data-i18n="shapeAuto" value="auto">Circle · Circle · Heart</option><option data-i18n="shapeCircle" value="ripple">Circular ripple</option><option data-i18n="shapeHeart" value="heart">Heart ripple</option></select></div>
 <div class="select-row"><label data-i18n="glyphLabel" for="glyph-select">Character pool</label><select id="glyph-select"><option data-i18n="glyphMixed" value="mixed">Mixed characters</option><option data-i18n="glyphLetters" value="lettered">More letters</option><option data-i18n="glyphDigits" value="figured">More digits</option></select></div>
 <div class="range-control"><div class="range-heading"><label data-i18n="scaleLabel" for="scale-range">Glyph size</label><output for="scale-range" id="scale-output">1.00×</output></div><input data-option="scale" id="scale-range" max="1.75" min="0.65" step="0.05" type="range" value="1"/></div>
@@ -2424,7 +2467,7 @@ if (typeof window !== 'undefined') window.DigitalRipples = DigitalRipples;
   const host = $('ripple-background');
   const presetNames = ['reference', 'warm', 'dark'];
   const requestedPreset = params.get('preset');
-  const initialPreset = presetNames.includes(requestedPreset) ? requestedPreset : 'reference';
+  const initialPreset = presetNames.includes(requestedPreset) ? requestedPreset : 'dark';
   const seed = Number.parseInt(params.get('seed'), 10);
   const isQA = params.get('qa') === '1';
   const options = { preset: initialPreset, interactive: true, respectReducedMotion: true, shape: 'auto' };

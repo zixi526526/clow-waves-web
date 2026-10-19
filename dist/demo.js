@@ -187,7 +187,7 @@
   const host = $('ripple-background');
   const presetNames = ['reference', 'warm', 'dark'];
   const requestedPreset = params.get('preset');
-  const initialPreset = presetNames.includes(requestedPreset) ? requestedPreset : 'reference';
+  const initialPreset = presetNames.includes(requestedPreset) ? requestedPreset : 'dark';
   const seed = Number.parseInt(params.get('seed'), 10);
   const isQA = params.get('qa') === '1';
   const options = { preset: initialPreset, interactive: true, respectReducedMotion: true, shape: 'auto' };
