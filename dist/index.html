@@ -29,14 +29,9 @@
 </nav>
 </header>
 <main class="demo-interface">
-<p class="first-click-hint" data-i18n="clickHint" id="first-click-hint">Click anywhere to make waves</p>
+<p class="first-click-hint" data-i18n="clickHint" id="first-click-hint">Just click anywhere</p>
 <div class="demo-bottom" data-ripple-ignore="">
-<form autocomplete="off" class="ripple-form" data-ripple-ignore="" id="ripple-form">
-<label class="input-label" data-i18n="inputLabel" for="ripple-text">RIPPLE LAB</label>
-<input aria-describedby="input-explanation" data-i18n-placeholder="inputPlaceholder" id="ripple-text" maxlength="160" name="ripple-text" placeholder="Type heart or circle, then press Enter" spellcheck="false" type="text"/>
-<button aria-label="Trigger a ripple with the entered text" class="submit-button" data-i18n-aria="submitLabel" data-i18n-title="submitTitle" id="text-ripple-button" title="Trigger ripple (Enter)" type="submit"><span aria-hidden="true">↵</span></button>
-<span class="sr-only" data-i18n="inputExplanation" id="input-explanation">This is a local visual effect, not an AI chat. Your text is never sent. Try “heart” or “circle”.</span>
-</form>
+
 <div class="demo-credits demo-interface" data-ripple-ignore=""><span data-i18n="credits">Based on Orgtree · Independent unofficial demo</span><a data-i18n="sourceLink" href="https://github.com/zixi526526/clow-waves-web" rel="noopener noreferrer" target="_blank">Source ↗</a></div>
 </div>
 </main>
@@ -52,7 +47,7 @@
 <div class="range-control"><div class="range-heading"><label data-i18n="speedLabel" for="speed-range">Flow speed</label><output for="speed-range" id="speed-output">1.00×</output></div><input data-option="speed" id="speed-range" max="1.60" min="0.40" step="0.05" type="range" value="1"/></div>
 <div class="panel-actions"><button aria-pressed="false" class="panel-button" data-i18n="pause" id="pause-toggle" type="button">Pause animation</button><button class="panel-button" data-i18n="reset" id="reset-settings" type="button">Reset preset</button></div>
 <div class="panel-actions"><button class="panel-button" data-i18n="play" id="replay-demo" type="button">Play click sequence</button><button class="panel-button" data-i18n="copy" id="copy-embed" type="button">Copy embed code</button></div>
-<p class="panel-footnote" data-i18n="panelFootnote">Press H for clean view, Esc to close. The input only triggers visual effects.</p>
+<p class="panel-footnote" data-i18n="panelFootnote">Press H for clean view, Esc to close. Click the background to create ripples.</p>
 <div class="copy-fallback" hidden="" id="copy-fallback"><label data-i18n="copyFallback" for="embed-code">Select and copy the code below</label><textarea id="embed-code" readonly="" rows="6" spellcheck="false"></textarea></div>
 </section>
 <button aria-label="Show demo controls (H)" class="restore-interface" data-i18n-aria="restoreAria" data-i18n-title="restoreTitle" data-ripple-ignore="" hidden="" id="restore-interface" title="Show controls (H)" type="button"><span aria-hidden="true">◌</span><span class="restore-label" data-i18n="restoreLabel">Show controls</span></button>

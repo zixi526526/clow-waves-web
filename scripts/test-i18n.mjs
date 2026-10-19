@@ -14,7 +14,7 @@ const findKeys = text => [...text.matchAll(/data-i18n(?:-aria|-title|-placeholde
 test('demo starts in English with an explicit bilingual switch', () => {
   assert.match(html, /<html lang="en">/);
   assert.match(html, /id="language-toggle"/);
-  assert.match(html, /Click anywhere to make waves/);
+  assert.match(html, /Just click anywhere/);
   assert.match(html, /data-i18n="presetToggle">Presets<\/span>/);
   assert.doesNotMatch(html, /PresetsPresets/);
   assert.match(js, /const query = params\.get\('lang'\)/);
@@ -62,21 +62,33 @@ test('source credit remains visible as a readable pill in both online and offlin
   assert.match(html, /Based on Orgtree/);
 });
 
-test('source credit is centered below the bottom input in both online and offline demos', () => {
+test('source credit stays anchored at the bottom center', () => {
   const css = read('dist/demo.css');
-  assert.match(css, /\.demo-bottom \{[^}]*flex-direction: column/);
-  assert.match(css, /\.demo-credits \{[^}]*width: max-content/);
+  assert.match(css, /\.demo-bottom \{[^}]*left: 50%/);
+  assert.match(css, /\.demo-bottom \{[^}]*bottom: max\(18px, calc\(env\(safe-area-inset-bottom\) \+ 8px\)\)/);
   assert.match(css, /\.demo-credits \{[^}]*position: relative/);
-  assert.match(css, /\.demo-bottom \{[^}]*pointer-events: none/);
   for (const page of [html, offline]) {
     const footer = page.indexOf('class="demo-bottom"');
-    const form = page.indexOf('id="ripple-form"', footer);
     const credit = page.indexOf('class="demo-credits', footer);
-    const closeMain = page.indexOf('</main>', footer);
-    assert.ok(footer >= 0 && form > footer && credit > form && closeMain > credit, 'credit must follow form inside bottom stack');
-    assert.equal(page.match(/class="demo-credits/g)?.length, 1, 'credit should exist once');
+    const endMain = page.indexOf('</main>', footer);
+    assert.ok(footer >= 0 && credit > footer && endMain > credit);
+    assert.equal(page.match(/class="demo-credits/g)?.length, 1);
+    assert.doesNotMatch(page, /id="ripple-form"|id="ripple-text"|id="text-ripple-button"/);
   }
 });
+test('bilingual click hint fades after the first background interaction', () => {
+  const css = read('dist/demo.css');
+  assert.equal(messages.en.clickHint, 'Just click anywhere');
+  assert.equal(messages.zh.clickHint, '随意点击，看看波纹');
+  assert.match(html, /data-i18n="clickHint"[^>]*>Just click anywhere<\/p>/);
+  assert.match(offline, /data-i18n="clickHint"[^>]*>Just click anywhere<\/p>/);
+  assert.match(css, /\.first-click-hint \{[^}]*pointer-events: none;[^}]*transition: opacity 600ms ease/);
+  assert.match(css, /\.first-click-hint\.is-dismissed \{ opacity: 0; \}/);
+  assert.match(js, /host\.addEventListener\('pointerdown', dismissHint/);
+  assert.match(js, /host\.addEventListener\('ripple', dismissHint/);
+  assert.doesNotMatch(js, /\$\('ripple-form'\)|\$\('ripple-text'\)/);
+});
+
 test('demo starts with glyph scale 0.65 and symmetric 0.45–0.85 adjustment range', () => {
   const range = /id="scale-range" max="0\.85" min="0\.45" step="0\.05" type="range" value="0\.65"/;
   for (const page of [html, offline]) {

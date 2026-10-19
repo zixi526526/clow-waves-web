@@ -18,7 +18,7 @@ Double-click **`digital-ripples-standalone.html`** at the repository root. It em
 
 The web demo opens in dark mode with a 0.65× glyph scale. Clicking empty space creates a blue ripple. In automatic mode, clicks cycle through **circle → circle → heart**; quick pointer movement leaves a subtler wake in the glyph cloud. The click counter continues until the component is cleared or destroyed.
 
-The top-right **Preset** control switches between a reference paper-white appearance, warm ivory, and a dark extension. **Adjust** lets you select the ripple shape and glyph pool, or modify scale, density, and speed. **Clean background** or **H** hides the foreground UI; press H, Esc, or the small corner button to restore it. The input field is a local demo: type “heart” or “circle” and press Enter to trigger the specified shape.
+The top-right **Preset** control switches between a reference paper-white appearance, warm ivory, and a dark extension. **Adjust** lets you select the ripple shape and glyph pool, or modify scale, density, and speed. **Clean background** or **H** hides the foreground UI; press H, Esc, or the small corner button to restore it. The unobtrusive “Just click anywhere” hint fades after the first background click; the source attribution remains at the bottom center.
 
 You can also open `dist/index.html` directly, provided its companion JavaScript and CSS files remain beside it. When served over HTTP, query parameters include `?clean=1` (clean background), `?demo=1` (automatic click demonstration), `?preset=warm` (warm preset), and `?seed=1701` (fixed random seed). These parameters may be combined.
 

@@ -30,12 +30,7 @@
     "settingsToggle": "Customize",
     "cleanToggle": "Clean view",
     "cleanTitle": "Hide controls (H)",
-    "clickHint": "Click anywhere to make waves",
-    "inputLabel": "RIPPLE LAB",
-    "inputPlaceholder": "Type heart or circle, then press Enter",
-    "submitLabel": "Trigger a ripple with the entered text",
-    "submitTitle": "Trigger ripple (Enter)",
-    "inputExplanation": "This is a local visual effect, not an AI chat. Your text is never sent. Try “heart” or “circle”.",
+    "clickHint": "Just click anywhere",
     "settingsTitle": "Make the waves your own",
     "closeSettings": "Close settings",
     "panelIntro": "Changes take effect instantly. Click the empty background to interact.",
@@ -61,7 +56,7 @@
     "play": "Play click sequence",
     "stop": "Stop sequence",
     "copy": "Copy embed code",
-    "panelFootnote": "Press H for clean view, Esc to close. The input only triggers visual effects.",
+    "panelFootnote": "Press H for clean view, Esc to close. Click the background to create ripples.",
     "copyFallback": "Select and copy the code below",
     "restoreLabel": "Show controls",
     "restoreAria": "Show demo controls (H)",
@@ -97,12 +92,7 @@
     "settingsToggle": "调节",
     "cleanToggle": "纯背景",
     "cleanTitle": "隐藏控件（H）",
-    "clickHint": "点击空白处，看看波纹",
-    "inputLabel": "波纹演示",
-    "inputPlaceholder": "输入“爱心”或“圆形”，按 Enter 触发波纹",
-    "submitLabel": "根据输入文字触发波纹",
-    "submitTitle": "触发波纹（Enter）",
-    "inputExplanation": "这里只是本地视觉特效，不是 AI 对话。文字不会被发送。可输入“爱心”或“圆形”。",
+    "clickHint": "随意点击，看看波纹",
     "settingsTitle": "让波纹适合你的网页",
     "closeSettings": "关闭调节面板",
     "panelIntro": "调整会立即生效。点击背景仍可激起波纹。",
@@ -128,7 +118,7 @@
     "play": "播放点击示范",
     "stop": "停止点击示范",
     "copy": "复制嵌入代码",
-    "panelFootnote": "按 H 隐藏控件，Esc 关闭面板。输入框只用来触发视觉特效。",
+    "panelFootnote": "按 H 隐藏控件，Esc 关闭面板。点击背景即可触发波纹。",
     "copyFallback": "请选中并复制以下代码",
     "restoreLabel": "显示控件",
     "restoreAria": "显示演示控件（H）",
@@ -447,18 +437,6 @@
   });
   $('replay-demo').addEventListener('click', replayDemo);
   $('copy-embed').addEventListener('click', copyEmbed);
-  $('ripple-form').addEventListener('submit', (event) => {
-    event.preventDefault();
-    const text = $('ripple-text').value.trim();
-    const state = getOptions();
-    let shape = state.shape || 'auto';
-    if (/爱|心|heart|love|♥|♡|❤/iu.test(text)) shape = 'heart';
-    else if (/圆|圈|波|ring|ripple|circle/iu.test(text)) shape = 'ripple';
-    const bounds = host.getBoundingClientRect();
-    emitRipple(bounds.width * 0.5, bounds.height * 0.49, shape, 1);
-    if (text) $('ripple-text').value = '';
-  });
-
   host.addEventListener('ripple', dismissHint);
   host.addEventListener('error', (event) => {
     $('load-error').hidden = false;
